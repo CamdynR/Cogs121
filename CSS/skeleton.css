@@ -1,0 +1,9 @@
+/* logo banner area */
+#banner {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    color: white;
+    background-color: #888888;
+    font-size: 18px;
+    text-align: center;}
