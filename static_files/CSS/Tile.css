@@ -1,0 +1,64 @@
+a {
+  text-decoration: none;
+  color: white;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+#tileList {
+  color: #696969;
+  font-size: 1.5rem;
+}
+
+.tile {
+  width: 90%;
+  height: 225px;
+  background-color: lightgrey;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+#savedTile5 {
+  margin-bottom: 75px;
+}
+
+.tileStar {
+  width: 40px;
+  height: 40px;
+  float: left;
+  margin-left: 5px;
+  margin-top: -57px;
+}
+
+.tileHeadline {
+  padding-top: 12px;
+}
+
+#tileSubTxt {
+  font-size: 1.2rem;
+  margin-top: -5px;
+  margin-bottom: 25px;
+}
+
+#leftLink {
+  background-color: blue;
+  padding: 12px 20px 12px 20px;
+}
+
+#centerLink {
+  background-color: #696969;
+  padding: 12px 10px 12px 10px;
+}
+
+#rightLink {
+  background-color: red;
+  padding: 12px 15px 12px 15px;
+}
+
+#leftLink, #centerLink, #rightLink {
+  margin-top: 5px;
+}
