@@ -7,7 +7,12 @@
   // Initialize Firebase
   var config = {
     // Paste Data HERE:
-    
+    apiKey: "AIzaSyBdMvbpg5HHZmCOWkoI45DF6dpEuQXLxxU",
+    authDomain: "bothsides-70e83.firebaseapp.com",
+    databaseURL: "https://bothsides-70e83.firebaseio.com",
+    projectId: "bothsides-70e83",
+    storageBucket: "bothsides-70e83.appspot.com",
+    messagingSenderId: "841983833378"
   };
   firebase.initializeApp(config);
 </script>
@@ -25,6 +30,87 @@
 <script type="text/javascript">
     $(document).ready(() => {
         const database = firebase.database();
+
+        $('#Chris').click(() => {
+            const requestURL = 'authors/' + 'Chris';
+            console.log('making ajax request to:', requestURL);
+            // From: http://learn.jquery.com/ajax/jquery-ajax-methods/
+            // Using the core $.ajax() method since it's the most flexible.
+            // ($.get() and $.getJSON() are nicer convenience functions)
+            $.ajax({
+              // all URLs are relative to http://localhost:3000/
+              url: requestURL,
+              type: 'GET',
+              dataType : 'json', // this URL returns data in JSON format
+              success: (data) => {
+                console.log('You received some data!', data);
+                if (data.stance && data.photo) {
+                  $('#status').html('Successfully fetched data at URL: ' + requestURL);
+                  $('#authDiv').html('My stance is ' + data.stance);
+                  $('#authorImage').attr('src', data.photo).attr('width', '300px');
+                } else {
+                  $('#status').html('Error: could not find user at URL: ' + requestURL);
+                  // clear the display
+                  $('#authDiv').html('');
+                  $('#authorImage').attr('src', '').attr('width', '0px');
+                }
+              },
+            });
+        });
+
+        $('#Shreya').click(() => {
+            const requestURL = 'authors/' + 'Shreya';
+            console.log('making ajax request to:', requestURL);
+            // From: http://learn.jquery.com/ajax/jquery-ajax-methods/
+            // Using the core $.ajax() method since it's the most flexible.
+            // ($.get() and $.getJSON() are nicer convenience functions)
+            $.ajax({
+              // all URLs are relative to http://localhost:3000/
+              url: requestURL,
+              type: 'GET',
+              dataType : 'json', // this URL returns data in JSON format
+              success: (data) => {
+                console.log('You received some data!', data);
+                if (data.stance && data.photo) {
+                  $('#status').html('Successfully fetched data at URL: ' + requestURL);
+                  $('#authDiv').html('My stance is ' + data.stance);
+                  $('#authorImage').attr('src', data.photo).attr('width', '300px');
+                } else {
+                  $('#status').html('Error: could not find user at URL: ' + requestURL);
+                  // clear the display
+                  $('#authDiv1').html('');
+                  $('#authorImage1').attr('src', '').attr('width', '0px');
+                }
+              },
+            });
+        });
+
+        $('#Alan').click(() => {
+            const requestURL = 'authors/' + 'Alan';
+            console.log('making ajax request to:', requestURL);
+            // From: http://learn.jquery.com/ajax/jquery-ajax-methods/
+            // Using the core $.ajax() method since it's the most flexible.
+            // ($.get() and $.getJSON() are nicer convenience functions)
+            $.ajax({
+              // all URLs are relative to http://localhost:3000/
+              url: requestURL,
+              type: 'GET',
+              dataType : 'json', // this URL returns data in JSON format
+              success: (data) => {
+                console.log('You received some data!', data);
+                if (data.stance && data.photo) {
+                  $('#status').html('Successfully fetched data at URL: ' + requestURL);
+                  $('#authDiv').html('My stance is ' + data.stance);
+                  $('#authorImage').attr('src', data.photo).attr('width', '300px');
+                } else {
+                  $('#status').html('Error: could not find user at URL: ' + requestURL);
+                  // clear the display
+                  $('#authDiv2').html('');
+                  $('#authorImage2').attr('src', '').attr('width', '0px');
+                }
+              },
+            });
+        });
     });
 </script>
 
@@ -51,6 +137,9 @@
             <a id="leftLink" href="Left.html">LEFT</a>
             <a id="centerLink" href="neutral.html">CENTER</a>
             <a id="rightLink" href="Right.html">RIGHT</a>
+            <button class="authorInfo" id='Chris'>About the Author</button>
+            <div id="authDiv"></div>
+            <img id="authorImage"></img>
         </li>
         <li id="savedTile2" class="tile">
             <p class="tileHeadline">Headline 2</p>
@@ -62,6 +151,9 @@
             <a id="leftLink" href="Left.html">LEFT</a>
             <a id="centerLink" href="neutral.html">CENTER</a>
             <a id="rightLink" href="Right.html">RIGHT</a>
+            <button class="authorInfo" id='Shreya'>About the Author</button>
+            <div id="authDiv1"></div>
+            <img id="authorImage1"></img>
         </li>
         <li id="savedTile3" class="tile">
             <p class="tileHeadline">Headline 3</p>
@@ -73,6 +165,9 @@
             <a id="leftLink" href="Left.html">LEFT</a>
             <a id="centerLink" href="neutral.html">CENTER</a>
             <a id="rightLink" href="Right.html">RIGHT</a>
+            <button class="authorInfo" id='Alan'>About the Author</button>
+            <div id="authDiv2"></div>
+            <img id="authorImage2"></img>
         </li>
         <li id="savedTile4" class="tile">
             <p class="tileHeadline">Headline 4</p>
