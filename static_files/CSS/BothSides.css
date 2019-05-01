@@ -11,6 +11,20 @@ body {
     padding: 0; 
 }
 
+/* headline configuations */
+h1 {
+    font-family: 'Nanum Gothic';
+    letter-spacing: 0.2rem;
+}
+
+#moreButton {
+position: fixed;
+  left: 50%;
+  bottom: -1rem;
+  transform: translate(-50%, -50%);
+  margin: 0 auto;
+}
+
 /* logo banner area */
 #banner {
     display: flex;
@@ -24,22 +38,32 @@ body {
     text-align: center;
 }
 
+#BackToTop {
+    position: relative; 
+    bottom: 20px;
+    z-index: 99;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    left: 50%;
+    transform: translate(-50%, -10%); 
+}
+
+#saved {
+    color: white;
+    text-decoration: none;
+    position: absolute;
+    top: 0px;
+    right: 20px; 
+}
+
+#title {
+    color: white;
+    text-decoration: none;
+    text-align: center;
+}
+
 #banner a {
     color: white;
     text-decoration: none; 
-}
-
-/* headline configuations */
-h1 {
-    font-family: 'Nanum Gothic';
-    letter-spacing: 0.2rem;
-}
-
-
-#moreButton {
-position: fixed;
-  left: 50%;
-  bottom: -1rem;
-  transform: translate(-50%, -50%);
-  margin: 0 auto;
 }
