@@ -1,0 +1,22 @@
+/* logo banner area */
+#banner {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    color: white;
+    background-color: #888888;
+    font-size: 18px;
+    text-align: center;}
+
+
+
+#BackToTop {
+    
+    position: relative; 
+    bottom: 20px;
+    z-index: 99;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    left: 50%;
+    transform: translate(-50%, -10%);
