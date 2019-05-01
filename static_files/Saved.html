@@ -14,7 +14,7 @@
   firebase.initializeApp(config);
 </script>
     <head>
-            <title>Saved</title>
+            <title>Saved Articles</title>
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
@@ -51,17 +51,29 @@
 
     <!-- Company Name & link on banner  -->
     <div id="banner">
-	    <a href="BothSides.html"><h1>Back to Home</h1></a>
+        <a href="BothSides.html" id="savedBack">< back</a>
+        <h1 id="savedTitle">Saved</h1>
     </div>
     <div id="status"></div>
 
-
-
-
+    <center>
+    <ul id="tileList">
+        <li id="savedTile1" class="tile">Headline</li>
+        <li id="savedTile2" class="tile">Headline</li>
+        <li id="savedTile3" class="tile">Headline</li>
+        <li id="savedTile4" class="tile">Headline</li>
+    </ul>
+    </center>
     
-
 </body>
 
-<!-- Back to Top -->
+<!-- More -->
+<div id="BackToTop">
+	<a href = "#banner">
+	<img src = "Images/arrow_down.png"
+	 width = "50px" height = "50px"
+	 alt = "Back to Top" title = "Back to Top">
+	</a>
+</div>
 
 </html>

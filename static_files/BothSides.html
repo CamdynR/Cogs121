@@ -1,6 +1,5 @@
 <!-- Skeleton HomePage -->
 
-
 <!DOCTYPE html>
 <html>
 <script src="https://www.gstatic.com/firebasejs/5.11.0/firebase.js"></script>
@@ -12,7 +11,7 @@
   firebase.initializeApp(config);
 </script>
     <head>
-            <title>Home - BothSides</title>
+            <title>Home - Both Sides</title>
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
@@ -32,10 +31,8 @@
 
     <!-- Company Name & link on banner  -->
     <div id="banner">
-	    <a href="BothSides.html"><h1>BothSides</h1></a>
-    </div>
-    <div>
-        <a href="Saved.html"><h1>Saved Articles</h1></a>
+        <a href="BothSides.html" id="title"><h1>BothSides</h1></a>
+        <a href="Saved.html" id="starButton"><h1>⛤</h1></a>
     </div>
     <div id="status"></div>
 
@@ -46,7 +43,13 @@
 
 </body>
 
-<!-- Back to Top -->
-<center><input type="image" src="Images/BackToTop.png" name="Go to Top" class="BackToTop" id="saveForm" /></center>
+<!-- More -->
+<div id="moreButton">
+	<a href = "#banner">
+	<img src = "Images/arrow_down.png"
+	 width = "50px" height = "50px"
+	 alt = "Back to Top" title = "Back to Top">
+	</a>
+</div>
 
 </html>

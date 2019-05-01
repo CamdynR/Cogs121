@@ -1,8 +1,72 @@
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* headline configuations */
+h1 {
+    font-family: 'Nanum Gothic';
+    letter-spacing: 0.2rem;
+}
+
+body {
+    /* background details */
+    background-color:	white;
+    
+    /* body font details */
+    text-align: center;
+    font-family: 'Nanum Gothic';
+    color: black;
+    font-size: 16px;
+    margin: 0;
+    padding: 0; 
+}
+
+/* logo banner area */
 #banner {
     display: flex;
     justify-content: center;
+    height: 3.5rem;
     width: 100%;
     color: white;
     background-color: #888888;
+    padding: 1rem 0 1.5rem 0;
     font-size: 18px;
-    text-align: center;}
+    text-align: center;
+}
+
+#savedBack {
+    color: white;
+    text-decoration: none; 
+    font-size: 1.5rem;
+    position: absolute;
+    left: 20px;
+    top: 48px;
+}
+
+#tileList {
+    color: white;
+    font-size: 1.5rem;
+}
+
+.tile {
+    width: 90%;
+    height: 200px;
+    background-color: darkblue;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#banner a {
+    color: white;
+    text-decoration: none; 
+}
+
+#BackToTop {
+    position: fixed;
+    left: 50%;
+    bottom: -1rem;
+    transform: translate(-50%, -50%);
+    margin: 0 auto;
+}
