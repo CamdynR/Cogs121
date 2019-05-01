@@ -70,3 +70,13 @@ body {
     transform: translate(-50%, -50%);
     margin: 0 auto;
 }
+
+.trash {
+    position: fixed;
+    top: 50px;
+    left: 390px;
+    font-size: 100px;
+    opacity: 1;
+    filter: alpha(opacity=100);
+
+}
