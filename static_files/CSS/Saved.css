@@ -1,8 +1,40 @@
+body {
+    /* background details */
+    background-color:	white;
+    
+    /* body font details */
+    text-align: center;
+    font-family: 'Nanum Gothic';
+    color: black;
+    font-size: 16px;
+    margin: 0;
+    padding: 0; }
+
+/* logo banner area */
 #banner {
     display: flex;
     justify-content: center;
+    height: 4rem;
     width: 100%;
     color: white;
     background-color: #888888;
+    padding: 1rem 0 1.5rem 0;
     font-size: 18px;
     text-align: center;}
+
+#banner a {
+    color: white;
+    text-decoration: none; }
+
+/* headline configuations */
+h1 {
+    font-family: 'Nanum Gothic';
+    letter-spacing: 0.2rem;}
+
+
+#moreButton {
+position: fixed;
+  left: 50%;
+  bottom: -1rem;
+  transform: translate(-50%, -50%);
+  margin: 0 auto;}
