@@ -29,7 +29,7 @@ position: fixed;
 #banner {
     display: flex;
     justify-content: center;
-    height: 4rem;
+    height: 3.5rem;
     width: 100%;
     color: white;
     background-color: #888888;
@@ -49,12 +49,12 @@ position: fixed;
     transform: translate(-50%, -10%); 
 }
 
-#saved {
+#starButton {
     color: white;
     text-decoration: none;
     position: absolute;
-    top: 0px;
-    right: 20px; 
+    top: 10px;
+    right: 10px; 
 }
 
 #title {
