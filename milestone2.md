@@ -21,6 +21,7 @@ We had no changes in our idea and we decided to move forward with our idea from 
 
 # Screenshots of UI Skeleton
 
+![Image of Storyboard](https://github.com/CamdynR/Cogs121/blob/master/image3.jpg)
 
 
 
