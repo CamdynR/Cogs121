@@ -6,12 +6,10 @@
     color: white;
     background-color: #888888;
     font-size: 18px;
-    text-align: center;}
-
-
+    text-align: center;
+}
 
 #BackToTop {
-    
     position: relative; 
     bottom: 20px;
     z-index: 99;
@@ -19,4 +17,18 @@
     outline: none;
     cursor: pointer;
     left: 50%;
-    transform: translate(-50%, -10%);
+    transform: translate(-50%, -10%); 
+}
+
+#saved {
+    color: white;
+    text-decoration: none;
+    position: absolute;
+    top: 0px;
+    right: 20px; 
+}
+
+#title {
+    color: white;
+    text-decoration: none;
+}
