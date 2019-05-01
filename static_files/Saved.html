@@ -1,5 +1,18 @@
 <!DOCTYPE html>
 <html>
+<script src="https://www.gstatic.com/firebasejs/5.11.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBdMvbpg5HHZmCOWkoI45DF6dpEuQXLxxU",
+    authDomain: "bothsides-70e83.firebaseapp.com",
+    databaseURL: "https://bothsides-70e83.firebaseio.com",
+    projectId: "bothsides-70e83",
+    storageBucket: "bothsides-70e83.appspot.com",
+    messagingSenderId: "841983833378"
+  };
+  firebase.initializeApp(config);
+</script>
     <head>
             <title>Saved Articles</title>
             <meta charset="utf-8">
@@ -10,6 +23,30 @@
     </head>
 <script src="Javascript/jquery-3.3.1.min.js"></script>
 
+<script type="text/javascript">
+    $(document).ready(() => {
+        const database = firebase.database();
+
+        // database.ref('/').remove();
+        
+        database.ref('saved/article1').set({Title: 'Sample Article 1', Body: 'This is the text for a sample article. This should be displaying at some point.'});
+
+        database.ref('saved/article2').set({Title: 'Sample Article 2',   Body: 'This is the text for a sample article. This should be displaying at some point.'});
+
+        database.ref('saved/article3').set({Title: 'Sample Article 3',   Body: 'This is the text for a sample article. This should be displaying at some point.'});
+
+        database.ref('history/previous').set({Title: 'Previous 7 days', Body: 'These are articles from the previous 7 days.'})
+
+        database.ref('saved/').once('value', (snapshot) => {
+            const data = snapshot.val();
+            console.log('You received some data!', data);
+            $('#status').html('Saved Articles: ' + Object.keys(data));
+        });
+    });
+
+    
+</script>
+
 <body>
 
     <!-- Company Name & link on banner  -->
@@ -17,6 +54,7 @@
         <a href="BothSides.html" id="savedBack">< back</a>
         <h1 id="savedTitle">Saved</h1>
     </div>
+    <div id="status"></div>
 
     <center>
     <ul id="tileList">
@@ -30,7 +68,7 @@
 </body>
 
 <!-- More -->
-<div id="moreButton">
+<div id="BackToTop">
 	<a href = "#banner">
 	<img src = "Images/arrow_down.png"
 	 width = "50px" height = "50px"
