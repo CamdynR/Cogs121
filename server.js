@@ -6,7 +6,9 @@ app.use(express.static('static_files'));
 const authorDatabase = {
   'Chris': {stance: 'left', photo: 'Images/chris.jpg'},
   'Alan': {stance: 'mid',   photo: 'Images/alan.jpg'},
-  'Shreya': {stance: 'right',  photo: 'Images/shreya.jpeg'}
+  'Shreya': {stance: 'right',  photo: 'Images/shreya.jpeg'},
+  'Dave': {stance: 'right',  photo: 'Images/dave.jpeg'},
+  'Garfield': {stance: 'left',  photo: 'Images/garfield.jpeg'}
 };
 
 app.get('/authors/:authorid', (req, res) => {

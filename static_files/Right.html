@@ -5,16 +5,43 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
-<<<<<<< HEAD
     <link rel="stylesheet" type="text/css" href="CSS/republican.css">
-=======
     <link rel="stylesheet" type="text/css" href="CSS/Politics.css">
->>>>>>> 7e4b7a74e161ce4d0d05f64fbe48d0b6b1ba9d40
 
     <script src="Javascript/BothSides.js"></script>
 </head>
 <script src="Javascript/jquery-3.3.1.min.js"></script>
 
+<script type="text/javascript">
+  $(document).ready(() => {
+    $('#Alan').click(() => {
+      const requestURL = 'authors/' + 'Alan';
+      console.log('making ajax request to:', requestURL);
+      // From: http://learn.jquery.com/ajax/jquery-ajax-methods/
+      // Using the core $.ajax() method since it's the most flexible.
+      // ($.get() and $.getJSON() are nicer convenience functions)
+      $.ajax({
+      // all URLs are relative to http://localhost:3000/
+        url: requestURL,
+        type: 'GET',
+        dataType : 'json', // this URL returns data in JSON format
+        success: (data) => {
+          console.log('You received some data!', data);
+          if (data.stance && data.photo) {
+            $('#status').html('Successfully fetched data at URL: ' + requestURL);
+            $('#authDiv2').html('My name is Alan and my stance is ' + data.stance);
+            $('#authorImage2').attr('src', data.photo).attr('width', '300px');
+          } else {
+            $('#status').html('Error: could not find user at URL: ' + requestURL);
+            // clear the display
+            $('#authDiv2').html('');
+            $('#authorImage2').attr('src', '').attr('width', '0px');
+          }
+        },
+      });
+    });
+  });
+</script>
 <body>
 
   <!-- Company Name & link on banner  -->
@@ -30,6 +57,9 @@
  <h3>Link to article</h3>
  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
     sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+ <button class="authorInfo" id='Alan'>About the Author</button>
+ <div id="authDiv2"></div>
+ <img id="authorImage2"></img>
 </div>
 
 </body>
