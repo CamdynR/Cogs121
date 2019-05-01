@@ -3,6 +3,14 @@
 
 <!DOCTYPE html>
 <html>
+<script src="https://www.gstatic.com/firebasejs/5.11.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    // Paste Data HERE:
+  };
+  firebase.initializeApp(config);
+</script>
     <head>
             <title>Home - BothSides</title>
             <meta charset="utf-8">
@@ -12,9 +20,15 @@
 
             <script src="Javascript/BothSides.js"></script>
     </head>
-<script src="Javascript/jquery-3.3.1.min.js"></script>
 
-<body>
+<script src="Javascript/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(() => {
+        const database = firebase.database();
+    });
+</script>
+
+</body>
 
     <!-- Company Name & link on banner  -->
     <div id="banner">
@@ -23,6 +37,7 @@
     <div>
         <a href="Saved.html"><h1>Saved Articles</h1></a>
     </div>
+    <div id="status"></div>
 
 
 
