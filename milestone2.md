@@ -35,9 +35,9 @@ In our saved html, we drew our inspiration heavily from Prototype #2's Saved Scr
 
 ![Image of Left Leaning](https://github.com/CamdynR/Cogs121/blob/master/Prototype%20and%20Storyboard/Skeleton/Left.png)
 
-![Image of Middle Leaning](https://github.com/CamdynR/Cogs121/blob/master/Prototype%20and%20Storyboard/Skeleton/Mid.png)
+![Image of Middle Leaning](https://github.com/CamdynR/Cogs121/blob/master/Prototype%20and%20Storyboard/Skeleton/Center.png)
 
-![Image of Right Leaning](https://github.com/CamdynR/Cogs121/blob/master/Prototype%20and%20Storyboard/Skeleton/Left.png)
+![Image of Right Leaning](https://github.com/CamdynR/Cogs121/blob/master/Prototype%20and%20Storyboard/Skeleton/Right.png)
 
 
 
