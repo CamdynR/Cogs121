@@ -1,6 +1,3 @@
-
-
-
 body {
     /* background details */
     background-color:	white;
@@ -35,13 +32,9 @@ h1 {
     letter-spacing: 0.5rem;}
 
 
-#BackToTop {
-    
-    position: relative; 
-    bottom: 20px;
-    z-index: 99;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    left: 50%;
-    transform: translate(-50%, -10%);
+#moreButton {
+position: fixed;
+  left: 50%;
+  bottom: -1rem;
+  transform: translate(-50%, -50%);
+  margin: 0 auto;}
