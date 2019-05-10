@@ -2,6 +2,7 @@
 
 <!DOCTYPE html>
 <html>
+<script src="Javascript/jquery-3.3.1.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/5.11.0/firebase.js"></script>
 <script>
   // Initialize Firebase
@@ -10,6 +11,208 @@
     
   };
   firebase.initializeApp(config);
+  const database = firebase.database();
+
+  function getCnnArticles() {
+    let cnnurl = 'https://newsapi.org/v2/top-headlines?' +
+          'sources=cnn&' +
+          // 'language=en&' +
+          
+    let req = new Request(cnnurl);
+    return fetch(req).then(response => response.json());
+  };
+
+  function getFoxArticles() {
+    let foxurl = 'https://newsapi.org/v2/top-headlines?' +
+          'sources=fox-news&' +
+          // 'language=en&' +
+          
+    let req = new Request(foxurl);
+    return fetch(req).then(response => response.json());
+  };
+
+  function getBbcArticles() {
+    let bbcurl = 'https://newsapi.org/v2/top-headlines?' +
+          'sources=bbc-news&' +
+          // 'language=en&' +
+          
+    let req = new Request(bbcurl);
+    return fetch(req).then(response => response.json());
+  };
+
+  function getNYTimesArticles() {
+    let nyturl = 'https://newsapi.org/v2/top-headlines?' +
+          'sources=the-new-york-times&' +
+          // 'language=en&' +
+          
+    let req = new Request(nyturl);
+    return fetch(req).then(response => response.json());
+  };
+
+  function getBreitbartArticles() {
+    let breiturl = 'https://newsapi.org/v2/top-headlines?' +
+          'sources=breitbart-news&' +
+          // 'language=en&' +
+          
+    let req = new Request(breiturl);
+    return fetch(req).then(response => response.json());
+  };
+
+  function getBloombergArticles() {
+    let bloomurl = 'https://newsapi.org/v2/top-headlines?' +
+          'sources=bloomberg&' +
+          // 'language=en&' +
+          
+    let req = new Request(bloomurl);
+    return fetch(req).then(response => response.json());
+  };
+
+  function getUSATodayArticles() {
+    let usaurl = 'https://newsapi.org/v2/top-headlines?' +
+          'sources=usa-today&' +
+          // 'language=en&' +
+          
+    let req = new Request(usaurl);
+    return fetch(req).then(response => response.json());
+  };
+
+  function getDailyMailArticles() {
+    let dailyMailurl = 'https://newsapi.org/v2/top-headlines?' +
+          'sources=daily-mail&' +
+          // 'language=en&' +
+          
+    let req = new Request(dailyMailurl);
+    return fetch(req).then(response => response.json());
+  };
+
+  function getMsnbcArticles() {
+    let msnbcurl = 'https://newsapi.org/v2/top-headlines?' +
+          'sources=msnbc&' +
+          // 'language=en&' +
+          
+    let req = new Request(msnbcurl);
+    return fetch(req).then(response => response.json());
+  };
+
+  (async function(){
+    cnnArticles = await getCnnArticles();
+    foxArticles = await getFoxArticles();
+    bbcArticles = await getBbcArticles();
+    nytArticles = await getNYTimesArticles();
+    breitbartArticles = await getBreitbartArticles();
+    bloombergArticles = await getBloombergArticles();
+    usatodayArticles = await getUSATodayArticles();
+    dailymailArticles = await getDailyMailArticles();
+    msnbcArticles = await getMsnbcArticles();
+
+    leftArticles = [cnnArticles, nytArticles, msnbcArticles];
+    rightArticles = [foxArticles, breitbartArticles, dailymailArticles];
+    midArticles = [bbcArticles, bloombergArticles, usatodayArticles];
+    //database.ref('history/left').set(leftArticles);
+    //database.ref('history/right').set(rightArticles);
+    //database.ref('history/mid').set(midArticles);
+  })();
+  setTimeout(function(){ 
+    console.log(cnnArticles.articles);
+    console.log(foxArticles.articles);
+    console.log(nytArticles.articles);
+    console.log(breitbartArticles.articles);
+    // console.log(bbcArticles.articles);
+    for (curLeftSource = 0; curLeftSource < leftArticles.length; curLeftSource++) {
+        for (curLeftArticle = 0; curLeftArticle < leftArticles[curLeftSource].articles.length; curLeftArticle++) {
+            for (curRightSource = 0; curRightSource < rightArticles.length; curRightSource++) {
+                //console.log(rightArticles[curRightSource].articles[0].source);
+                for (curRightArticle = 0; curRightArticle < rightArticles[curRightSource].articles.length; curRightArticle++) {
+                    let titleA = leftArticles[curLeftSource].articles[curLeftArticle].title.toLowerCase();
+                    let titleB = rightArticles[curRightSource].articles[curRightArticle].title.toLowerCase();
+                    let sim = findSimilarity(titleA, titleB);
+                    console.log(sim, titleA, titleB);
+                    if (sim > .3) {
+                        console.log(titleA);
+                        console.log(titleB);
+                        console.log('--------------------------------------')
+                        for (curMidSource = 0; curMidSource < midArticles.length; curMidSource++) {
+                            for (curMidArticle = 0; curMidArticle < midArticles[curMidSource].articles.length; curMidArticle++) {
+                                let titleC = midArticles[curMidSource].articles[curMidArticle].title;
+                                let simAB = findSimilarity(titleA, titleC);
+                                let simBC = findSimilarity(titleB, titleC);
+                                if (simAB > .3 || simBC > .3) {
+                                    console.log(titleA);
+                                    console.log(titleB);
+                                    console.log(titleC);
+                                    console.log('----------------------------------');
+                                    $('#Headline1').html(titleC);
+                                    $('#desc1').html(midArticles[curMidSource].articles[curMidArticle].description);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    } 
+  }, 6000);
+  function findSimilarity(title1, title2) {
+    
+    function termFreqMap(str) {
+        var words = str.split(' ');
+        //console.log(words);
+        var termFreq = {};
+        words.forEach(function(w) {
+            termFreq[w] = (termFreq[w] || 0) + 1;
+        });
+        return termFreq;
+    }
+
+    function addKeysToDict(map, dict) {
+        for (var key in map) {
+            dict[key] = true;
+        }
+    }
+
+    function termFreqMapToVector(map, dict) {
+        var termFreqVector = [];
+        for (var term in dict) {
+            termFreqVector.push(map[term] || 0);
+        }
+        return termFreqVector;
+    }
+
+    function vecDotProduct(vecA, vecB) {
+        var product = 0;
+        for (var i = 0; i < vecA.length; i++) {
+            product += vecA[i] * vecB[i];
+        }
+        return product;
+    }
+
+    function vecMagnitude(vec) {
+        var sum = 0;
+        for (var i = 0; i < vec.length; i++) {
+            sum += vec[i] * vec[i];
+        }
+        return Math.sqrt(sum);
+    }
+
+    function cosineSimilarity(vecA, vecB) {
+        return vecDotProduct(vecA, vecB) / (vecMagnitude(vecA) * vecMagnitude(vecB));
+    }
+
+    Cosinesimilarity = function textCosineSimilarity(strA, strB) {
+        var termFreqA = termFreqMap(strA);
+        var termFreqB = termFreqMap(strB);
+
+        var dict = {};
+        addKeysToDict(termFreqA, dict);
+        addKeysToDict(termFreqB, dict);
+
+        var termFreqVecA = termFreqMapToVector(termFreqA, dict);
+        var termFreqVecB = termFreqMapToVector(termFreqB, dict);
+
+        return cosineSimilarity(termFreqVecA, termFreqVecB);
+    }
+    return Cosinesimilarity(title1, title2);
+  };
 </script>
     <head>
             <title>Home - Both Sides</title>
@@ -24,7 +227,9 @@
 <script src="Javascript/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
     $(document).ready(() => {
-        const database = firebase.database();
+        
+
+        //setTimeout(function(){console.log(cnnArticles)},1000);
 
         $('.tileStar').click(() => {
             alert('Added to Saved!');
@@ -46,11 +251,10 @@
     <center>
     <ul id="tileList">
         <li id="savedTile1" class="tile">
-            <p class="tileHeadline">Headline 1</p>
+            <p class="tileHeadline" id='Headline1'>No news Articles</p>
             <a id="saveStar" href=""><img src="Images/hollowStar2.png" class="tileStar"></img></a>
 
-            <p id="tileSubTxt">Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-               sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <p id="desc1"></p>
 
             <a id="leftLink" href="Left.html">LEFT</a>
             <a id="centerLink" href="Mid.html">CENTER</a>

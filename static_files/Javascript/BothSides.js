@@ -1,14 +1,14 @@
-$(document).ready(function(){
-  $(".button1").click(function(){
-    $("#savedTile1").remove();
-  });
-  $(".button2").click(function(){
-    $("#savedTile2").remove();
-  });
-  $(".button3").click(function(){
-    $("#savedTile3").remove();
-  });
-  $(".button4").click(function(){
-    $("#savedTile4").remove();
-  });
-});
+// $(document).ready(function(){
+//   $(".button1").click(function(){
+//     $("#savedTile1").remove();
+//   });
+//   $(".button2").click(function(){
+//     $("#savedTile2").remove();
+//   });
+//   $(".button3").click(function(){
+//     $("#savedTile3").remove();
+//   });
+//   $(".button4").click(function(){
+//     $("#savedTile4").remove();
+//   });
+// });

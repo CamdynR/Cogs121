@@ -4,7 +4,12 @@
 <script>
   // Initialize Firebase
   var config = {
-    
+    apiKey: "AIzaSyBdMvbpg5HHZmCOWkoI45DF6dpEuQXLxxU",
+    authDomain: "bothsides-70e83.firebaseapp.com",
+    databaseURL: "https://bothsides-70e83.firebaseio.com",
+    projectId: "bothsides-70e83",
+    storageBucket: "bothsides-70e83.appspot.com",
+    messagingSenderId: "841983833378"
   };
   firebase.initializeApp(config);
 </script>
@@ -32,7 +37,7 @@
 
         database.ref('saved/article3').set({Title: 'Sample Article 3',   Body: 'This is the text for a sample article. This should be displaying at some point.'});
 
-        database.ref('history/previous').set({Title: 'Previous 7 days', Body: 'These are articles from the previous 7 days.'})
+        database.ref('history/previous').remove();
 
         database.ref('saved/').once('value', (snapshot) => {
             const data = snapshot.val();
