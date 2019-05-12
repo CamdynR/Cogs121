@@ -15,7 +15,7 @@
   firebase.initializeApp(config);
   const database = firebase.database();
 
-  function searchArticles() {
+  function findArticle() {
 
 
   }
@@ -263,10 +263,8 @@
         <a href="Saved.html" id="starButton">Saved<img src="Images/star.png"></img></a>
     </div>
     <div class="search-container">
-        <form action="/action_page.php">
-            <input type="text" placeholder="Search.." name="search">
-            <button type="submit"><i class="fa fa-search"></i></button>
-        </form>
+        <input type="text" placeholder="Search For Article.." name="search">
+        <input type="submit" type="button" value="Submit" onclick="findArticle();" />
     </div>
 
 
