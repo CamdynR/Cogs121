@@ -8,10 +8,20 @@
   // Initialize Firebase
   var config = {
     // Paste Data HERE:
+    apiKey:,
+    authDomain: ,
+    databaseURL: ,
+    storageBucket: ,
     
   };
+
   firebase.initializeApp(config);
   const database = firebase.database();
+
+  function searchArticles() {
+
+
+  }
 
   function getCnnArticles() {
     let cnnurl = 'https://newsapi.org/v2/top-headlines?' +
