@@ -15,10 +15,7 @@
   firebase.initializeApp(config);
   const database = firebase.database();
 
-  function findArticle() {
 
-
-  }
 
   function getCnnArticles() {
     let cnnurl = 'https://newsapi.org/v2/top-headlines?' +
@@ -263,9 +260,15 @@
         <a href="Saved.html" id="starButton">Saved<img src="Images/star.png"></img></a>
     </div>
     <div class="search-container">
-        <input type="text" placeholder="Search For Article.." name="search">
-        <input type="submit" type="button" value="Submit" onclick="findArticle();" />
+        <input type="search" placeholder="Search For Article.." id="searchInput" onsearch="findArticle()">
     </div>
+
+    <script>
+      function findArticle() {
+            var address = document.getElementById("searchInput");
+            console.log(address.value)
+        };
+    </script>
 
 
     <center>
