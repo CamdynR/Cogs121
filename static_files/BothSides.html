@@ -5,22 +5,26 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="Javascript/jquery-3.3.1.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/5.11.0/firebase.js"></script>
+<script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+
 <script>
   // Initialize Firebase
   var config = {
-
-    
+    apiKey: "AIzaSyDH0RrtWnjsBPp6QwD79NU40RIqg1OUQ2A",
+    databaseURL: "https://cogs121-98567.firebaseio.com/",
+    projectId: "cogs121-98567",
+    messagingSenderId: "425277339500"
   };
 
   firebase.initializeApp(config);
-  const database = firebase.database();
-
+  var database = firebase.database();
+  
 
 
   function getCnnArticles() {
     let cnnurl = 'https://newsapi.org/v2/top-headlines?' +
           'sources=cnn&' +
-          // 'language=en&' +
+           'language=en&' + "apiKey=07020439056e4e4a929e53b5a2825b1a"
           
     let req = new Request(cnnurl);
     return fetch(req).then(response => response.json());
@@ -29,7 +33,7 @@
   function getFoxArticles() {
     let foxurl = 'https://newsapi.org/v2/top-headlines?' +
           'sources=fox-news&' +
-          // 'language=en&' +
+           'language=en&' + "apiKey=07020439056e4e4a929e53b5a2825b1a"
           
     let req = new Request(foxurl);
     return fetch(req).then(response => response.json());
@@ -38,7 +42,7 @@
   function getBbcArticles() {
     let bbcurl = 'https://newsapi.org/v2/top-headlines?' +
           'sources=bbc-news&' +
-          // 'language=en&' +
+           'language=en&' + "apiKey=07020439056e4e4a929e53b5a2825b1a"
           
     let req = new Request(bbcurl);
     return fetch(req).then(response => response.json());
@@ -47,7 +51,7 @@
   function getNYTimesArticles() {
     let nyturl = 'https://newsapi.org/v2/top-headlines?' +
           'sources=the-new-york-times&' +
-          // 'language=en&' +
+          'language=en&' + "apiKey=07020439056e4e4a929e53b5a2825b1a"
           
     let req = new Request(nyturl);
     return fetch(req).then(response => response.json());
@@ -56,7 +60,7 @@
   function getBreitbartArticles() {
     let breiturl = 'https://newsapi.org/v2/top-headlines?' +
           'sources=breitbart-news&' +
-          // 'language=en&' +
+           'language=en&' + "apiKey=07020439056e4e4a929e53b5a2825b1a"
           
     let req = new Request(breiturl);
     return fetch(req).then(response => response.json());
@@ -65,7 +69,7 @@
   function getBloombergArticles() {
     let bloomurl = 'https://newsapi.org/v2/top-headlines?' +
           'sources=bloomberg&' +
-          // 'language=en&' +
+          'language=en&' + "apiKey=07020439056e4e4a929e53b5a2825b1a"
           
     let req = new Request(bloomurl);
     return fetch(req).then(response => response.json());
@@ -74,7 +78,7 @@
   function getUSATodayArticles() {
     let usaurl = 'https://newsapi.org/v2/top-headlines?' +
           'sources=usa-today&' +
-          // 'language=en&' +
+            'language=en&' + "apiKey=07020439056e4e4a929e53b5a2825b1a"
           
     let req = new Request(usaurl);
     return fetch(req).then(response => response.json());
@@ -83,7 +87,7 @@
   function getDailyMailArticles() {
     let dailyMailurl = 'https://newsapi.org/v2/top-headlines?' +
           'sources=daily-mail&' +
-          // 'language=en&' +
+           'language=en&' + "apiKey=07020439056e4e4a929e53b5a2825b1a"
           
     let req = new Request(dailyMailurl);
     return fetch(req).then(response => response.json());
@@ -92,7 +96,7 @@
   function getMsnbcArticles() {
     let msnbcurl = 'https://newsapi.org/v2/top-headlines?' +
           'sources=msnbc&' +
-          // 'language=en&' +
+          'language=en&' + "apiKey=07020439056e4e4a929e53b5a2825b1a"
           
     let req = new Request(msnbcurl);
     return fetch(req).then(response => response.json());
@@ -109,28 +113,30 @@
     dailymailArticles = await getDailyMailArticles();
     msnbcArticles = await getMsnbcArticles();
 
-    //leftArticles = [cnnArticles, nytArticles, msnbcArticles];
-    //rightArticles = [foxArticles, breitbartArticles, dailymailArticles];
-    //midArticles = [bbcArticles, bloombergArticles, usatodayArticles];
+    leftArticles = [cnnArticles, nytArticles, msnbcArticles];
+    rightArticles = [foxArticles, breitbartArticles, dailymailArticles];
+    midArticles = [bbcArticles, bloombergArticles, usatodayArticles];
 
-
-    //loop through each articles and add to firebase
-    //Grab the title and save into variable and add to database.ref('data/ var ').set(object)
-    //first key is data and then points to a list of all articles
-
+    //Adding articles to firebase
+    allArticles = [cnnArticles, nytArticles, msnbcArticles, foxArticles, breitbartArticles, dailymailArticles, bbcArticles, bloombergArticles, usatodayArticles];
     
-
-    //Grab this ref then put the leftArticle in it
-    //database.ref('history/left').set(leftArticles);
-    //database.ref('history/right').set(rightArticles);
-    //database.ref('history/mid').set(midArticles);
+    //Loops through each Site
+    for (const sites of allArticles) {
+        //Grab the title and save into variable and add to database
+        for (let art of sites.articles) {
+            var dirtyString = art.title;
+            var cleanString = dirtyString.split(/[^\w\s]/gi).join("")
+            database.ref(cleanString).set(art)
+        }
+    }
+    
   })();
 
   setTimeout(function(){ 
-    console.log(cnnArticles.articles);
-    console.log(foxArticles.articles);
-    console.log(nytArticles.articles);
-    console.log(breitbartArticles.articles);
+  //  console.log(cnnArticles.articles);
+  //  console.log(foxArticles.articles);
+  //  console.log(nytArticles.articles);
+  //  console.log(breitbartArticles.articles);
     // console.log(bbcArticles.articles);
     for (curLeftSource = 0; curLeftSource < leftArticles.length; curLeftSource++) {
         for (curLeftArticle = 0; curLeftArticle < leftArticles[curLeftSource].articles.length; curLeftArticle++) {
@@ -140,21 +146,21 @@
                     let titleA = leftArticles[curLeftSource].articles[curLeftArticle].title.toLowerCase();
                     let titleB = rightArticles[curRightSource].articles[curRightArticle].title.toLowerCase();
                     let sim = findSimilarity(titleA, titleB);
-                    console.log(sim, titleA, titleB);
+                 //   console.log(sim, titleA, titleB);
                     if (sim > .3) {
-                        console.log(titleA);
-                        console.log(titleB);
-                        console.log('--------------------------------------')
+                     //   console.log(titleA);
+                     //   console.log(titleB);
+                     //   console.log('--------------------------------------')
                         for (curMidSource = 0; curMidSource < midArticles.length; curMidSource++) {
                             for (curMidArticle = 0; curMidArticle < midArticles[curMidSource].articles.length; curMidArticle++) {
                                 let titleC = midArticles[curMidSource].articles[curMidArticle].title;
                                 let simAB = findSimilarity(titleA, titleC);
                                 let simBC = findSimilarity(titleB, titleC);
                                 if (simAB > .3 || simBC > .3) {
-                                    console.log(titleA);
-                                    console.log(titleB);
-                                    console.log(titleC);
-                                    console.log('----------------------------------');
+                                //    console.log(titleA);
+                                //    console.log(titleB);
+                                //    console.log(titleC);
+                                //    console.log('----------------------------------');
                                     $('#Headline1').html(titleC);
                                     $('#desc1').html(midArticles[curMidSource].articles[curMidArticle].description);
                                 }
@@ -264,8 +270,9 @@
     </div>
 
     <script>
+        
       function findArticle() {
-            var address = document.getElementById("searchInput");
+            let address = document.getElementById("searchInput");
             console.log(address.value)
         };
     </script>
