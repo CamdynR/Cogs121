@@ -2,16 +2,13 @@
 
 <!DOCTYPE html>
 <html>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="Javascript/jquery-3.3.1.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/5.11.0/firebase.js"></script>
 <script>
   // Initialize Firebase
   var config = {
-    // Paste Data HERE:
-    apiKey:,
-    authDomain: ,
-    databaseURL: ,
-    storageBucket: ,
+
     
   };
 
@@ -115,13 +112,23 @@
     dailymailArticles = await getDailyMailArticles();
     msnbcArticles = await getMsnbcArticles();
 
-    leftArticles = [cnnArticles, nytArticles, msnbcArticles];
-    rightArticles = [foxArticles, breitbartArticles, dailymailArticles];
-    midArticles = [bbcArticles, bloombergArticles, usatodayArticles];
+    //leftArticles = [cnnArticles, nytArticles, msnbcArticles];
+    //rightArticles = [foxArticles, breitbartArticles, dailymailArticles];
+    //midArticles = [bbcArticles, bloombergArticles, usatodayArticles];
+
+
+    //loop through each articles and add to firebase
+    //Grab the title and save into variable and add to database.ref('data/ var ').set(object)
+    //first key is data and then points to a list of all articles
+
+    
+
+    //Grab this ref then put the leftArticle in it
     //database.ref('history/left').set(leftArticles);
     //database.ref('history/right').set(rightArticles);
     //database.ref('history/mid').set(midArticles);
   })();
+
   setTimeout(function(){ 
     console.log(cnnArticles.articles);
     console.log(foxArticles.articles);
@@ -224,6 +231,7 @@
     return Cosinesimilarity(title1, title2);
   };
 </script>
+
     <head>
             <title>Home - Both Sides</title>
             <meta charset="utf-8">
@@ -253,9 +261,13 @@
     <div id="banner">
         <a href="BothSides.html" id="title"><h1>BothSides</h1></a>
         <a href="Saved.html" id="starButton">Saved<img src="Images/star.png"></img></a>
-       
     </div>
-    
+    <div class="search-container">
+        <form action="/action_page.php">
+            <input type="text" placeholder="Search.." name="search">
+            <button type="submit"><i class="fa fa-search"></i></button>
+        </form>
+    </div>
 
 
     <center>
