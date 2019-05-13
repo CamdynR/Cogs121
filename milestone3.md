@@ -1,5 +1,11 @@
 # Screenshots of latest UI: 
 
+![Image of Home Page](https://github.com/CamdynR/Cogs121/blob/master/Screen%20Shot%202019-05-13%20at%2010.32.47%20AM.png)
+![Image of Scrolled Down/Search](https://github.com/CamdynR/Cogs121/blob/master/Screen%20Shot%202019-05-13%20at%2010.32.57%20AM.png)
+![Image of Saved Page](https://github.com/CamdynR/Cogs121/blob/master/Screen%20Shot%202019-05-13%20at%2010.33.28%20AM.png)
+
+
+
 
 # Explanation: 
 
