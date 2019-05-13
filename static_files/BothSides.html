@@ -17,88 +17,89 @@
   };
   firebase.initializeApp(config);
   const database = firebase.database();
-
   function getCnnArticles() {
     let cnnurl = 'https://newsapi.org/v2/top-headlines?' +
           'sources=cnn&' +
+          'apiKey=5f5292f795ff4921b8fe0f9384dd7435';
           // 'language=en&' +
-          
     let req = new Request(cnnurl);
     return fetch(req).then(response => response.json());
   };
-
   function getFoxArticles() {
     let foxurl = 'https://newsapi.org/v2/top-headlines?' +
           'sources=fox-news&' +
+          'apiKey=5f5292f795ff4921b8fe0f9384dd7435';
           // 'language=en&' +
-          
     let req = new Request(foxurl);
     return fetch(req).then(response => response.json());
   };
-
   function getBbcArticles() {
     let bbcurl = 'https://newsapi.org/v2/top-headlines?' +
           'sources=bbc-news&' +
           // 'language=en&' +
-          
+          'apiKey=5f5292f795ff4921b8fe0f9384dd7435';
     let req = new Request(bbcurl);
     return fetch(req).then(response => response.json());
   };
-
   function getNYTimesArticles() {
     let nyturl = 'https://newsapi.org/v2/top-headlines?' +
           'sources=the-new-york-times&' +
           // 'language=en&' +
-          
+          'apiKey=5f5292f795ff4921b8fe0f9384dd7435';
     let req = new Request(nyturl);
     return fetch(req).then(response => response.json());
   };
-
   function getBreitbartArticles() {
     let breiturl = 'https://newsapi.org/v2/top-headlines?' +
           'sources=breitbart-news&' +
           // 'language=en&' +
-          
+          'apiKey=5f5292f795ff4921b8fe0f9384dd7435';
     let req = new Request(breiturl);
     return fetch(req).then(response => response.json());
   };
-
   function getBloombergArticles() {
     let bloomurl = 'https://newsapi.org/v2/top-headlines?' +
           'sources=bloomberg&' +
           // 'language=en&' +
-          
+          'apiKey=5f5292f795ff4921b8fe0f9384dd7435';
     let req = new Request(bloomurl);
     return fetch(req).then(response => response.json());
   };
-
   function getUSATodayArticles() {
     let usaurl = 'https://newsapi.org/v2/top-headlines?' +
           'sources=usa-today&' +
           // 'language=en&' +
-          
+          'apiKey=5f5292f795ff4921b8fe0f9384dd7435';
     let req = new Request(usaurl);
     return fetch(req).then(response => response.json());
   };
-
   function getDailyMailArticles() {
     let dailyMailurl = 'https://newsapi.org/v2/top-headlines?' +
           'sources=daily-mail&' +
           // 'language=en&' +
-          
+          'apiKey=5f5292f795ff4921b8fe0f9384dd7435';
     let req = new Request(dailyMailurl);
     return fetch(req).then(response => response.json());
   };
-
   function getMsnbcArticles() {
     let msnbcurl = 'https://newsapi.org/v2/top-headlines?' +
           'sources=msnbc&' +
           // 'language=en&' +
-          
+          'apiKey=5f5292f795ff4921b8fe0f9384dd7435';
     let req = new Request(msnbcurl);
     return fetch(req).then(response => response.json());
   };
-
+  function cleanArticleTitle(title) {
+    const toCut = ['and', 'in', 'on', 'from', 'to', 'a', 'an', 'the', 'he', 'she', 'we', 'this', 'that', 'with', 'will', 'it', 'be', 'can', 'but', 'is', 'was', 'what', 'for', 'of', 'at', 'not', 'they', 'them', 'say'];
+    let splitTitle = title.split(' ');
+    let newTitleArr = [];
+    for (i=0; i < splitTitle.length; i++) {
+        if (!toCut.includes(splitTitle[i])) {
+            newTitleArr.push(splitTitle[i]);
+        }
+    }
+    return newTitleArr.join(' ');
+  };
   (async function(){
     cnnArticles = await getCnnArticles();
     foxArticles = await getFoxArticles();
@@ -109,45 +110,55 @@
     usatodayArticles = await getUSATodayArticles();
     dailymailArticles = await getDailyMailArticles();
     msnbcArticles = await getMsnbcArticles();
-
     leftArticles = [cnnArticles, nytArticles, msnbcArticles];
     rightArticles = [foxArticles, breitbartArticles, dailymailArticles];
     midArticles = [bbcArticles, bloombergArticles, usatodayArticles];
-    //database.ref('history/left').set(leftArticles);
-    //database.ref('history/right').set(rightArticles);
-    //database.ref('history/mid').set(midArticles);
+    database.ref('history/left').set(leftArticles);
+    database.ref('history/right').set(rightArticles);
+    database.ref('history/mid').set(midArticles);
   })();
   setTimeout(function(){ 
-    console.log(cnnArticles.articles);
-    console.log(foxArticles.articles);
-    console.log(nytArticles.articles);
-    console.log(breitbartArticles.articles);
+    // console.log(cnnArticles.articles);
+    // console.log(foxArticles.articles);
+    // console.log(nytArticles.articles);
+    // console.log(breitbartArticles.articles);
     // console.log(bbcArticles.articles);
+    let displayArticles = [];
     for (curLeftSource = 0; curLeftSource < leftArticles.length; curLeftSource++) {
         for (curLeftArticle = 0; curLeftArticle < leftArticles[curLeftSource].articles.length; curLeftArticle++) {
             for (curRightSource = 0; curRightSource < rightArticles.length; curRightSource++) {
                 //console.log(rightArticles[curRightSource].articles[0].source);
                 for (curRightArticle = 0; curRightArticle < rightArticles[curRightSource].articles.length; curRightArticle++) {
-                    let titleA = leftArticles[curLeftSource].articles[curLeftArticle].title.toLowerCase();
-                    let titleB = rightArticles[curRightSource].articles[curRightArticle].title.toLowerCase();
+                    let titleA = cleanArticleTitle(leftArticles[curLeftSource].articles[curLeftArticle].title.toLowerCase());
+                    let titleB = cleanArticleTitle(rightArticles[curRightSource].articles[curRightArticle].title.toLowerCase());
                     let sim = findSimilarity(titleA, titleB);
-                    console.log(sim, titleA, titleB);
-                    if (sim > .3) {
-                        console.log(titleA);
-                        console.log(titleB);
-                        console.log('--------------------------------------')
+                    if (sim > .1) {
+                        // console.log(sim, titleA, titleB);
+                        displayArticle = leftArticles[curLeftSource].articles[curLeftArticle]
+                        if (displayArticle.content && displayArticle.description) {
+                            displayArticles.push(displayArticle);
+                        }
+                        
+                    }
+                    if (sim > .5) {
+                        // console.log(titleA);
+                        // console.log(titleB);
+                        // console.log('--------------------------------------');
                         for (curMidSource = 0; curMidSource < midArticles.length; curMidSource++) {
                             for (curMidArticle = 0; curMidArticle < midArticles[curMidSource].articles.length; curMidArticle++) {
-                                let titleC = midArticles[curMidSource].articles[curMidArticle].title;
+                                let titleC = cleanArticleTitle(midArticles[curMidSource].articles[curMidArticle].title.toLowerCase());
                                 let simAB = findSimilarity(titleA, titleC);
                                 let simBC = findSimilarity(titleB, titleC);
-                                if (simAB > .3 || simBC > .3) {
+                                if (simAB > .2 || simBC > .2) {
                                     console.log(titleA);
                                     console.log(titleB);
                                     console.log(titleC);
                                     console.log('----------------------------------');
-                                    $('#Headline1').html(titleC);
-                                    $('#desc1').html(midArticles[curMidSource].articles[curMidArticle].description);
+                                    // $('#Headline1').html(titleC);
+                                    // $('#desc1').html(midArticles[curMidSource].articles[curMidArticle].description);
+                                    if (midArticles[curMidSource].articles[curMidArticle].content && midArticles[curMidSource].articles[curMidArticle].description) {
+                                        displayArticles.push(midArticles[curMidSource].articles[curMidArticle]);
+                                    }
                                 }
                             }
                         }
@@ -155,8 +166,26 @@
                 }
             }
         }
-    } 
-  }, 6000);
+    }
+    // console.log(displayArticles);
+    if (displayArticles.length >= 5) {
+        for (i=0; i < 5; i++) {
+            let headID = '#Headline' + String(i+1);
+            let descID = '#desc' + String(i+1);
+            // console.log(headID, descID);
+            $(headID).html(displayArticles[i].title);
+            $(descID).html(displayArticles[i].description);
+        }
+    }
+    else {
+        for (i=0; i < displayArticles.length; i++) {
+            headID = '#Headline' + String(i+1);
+            descID = '#desc' + String(i+1);
+            $(headID).html(displayArticles[i].title);
+            $(descID).html(displayArticles[i].description);
+        }
+    }
+  }, 2000);
   function findSimilarity(title1, title2) {
     
     function termFreqMap(str) {
@@ -168,13 +197,11 @@
         });
         return termFreq;
     }
-
     function addKeysToDict(map, dict) {
         for (var key in map) {
             dict[key] = true;
         }
     }
-
     function termFreqMapToVector(map, dict) {
         var termFreqVector = [];
         for (var term in dict) {
@@ -182,7 +209,6 @@
         }
         return termFreqVector;
     }
-
     function vecDotProduct(vecA, vecB) {
         var product = 0;
         for (var i = 0; i < vecA.length; i++) {
@@ -190,7 +216,6 @@
         }
         return product;
     }
-
     function vecMagnitude(vec) {
         var sum = 0;
         for (var i = 0; i < vec.length; i++) {
@@ -198,22 +223,17 @@
         }
         return Math.sqrt(sum);
     }
-
     function cosineSimilarity(vecA, vecB) {
         return vecDotProduct(vecA, vecB) / (vecMagnitude(vecA) * vecMagnitude(vecB));
     }
-
     Cosinesimilarity = function textCosineSimilarity(strA, strB) {
         var termFreqA = termFreqMap(strA);
         var termFreqB = termFreqMap(strB);
-
         var dict = {};
         addKeysToDict(termFreqA, dict);
         addKeysToDict(termFreqB, dict);
-
         var termFreqVecA = termFreqMapToVector(termFreqA, dict);
         var termFreqVecB = termFreqMapToVector(termFreqB, dict);
-
         return cosineSimilarity(termFreqVecA, termFreqVecB);
     }
     return Cosinesimilarity(title1, title2);
@@ -233,43 +253,100 @@
 <script type="text/javascript">
     $(document).ready(() => {
         
-
         //setTimeout(function(){console.log(cnnArticles)},1000);
-
         $('.tileStar').click(() => {
             alert('Added to Saved!');
         });
+        $('#searchButton').click(() => {
+            database.ref('history/').once('value', (snapshot) => {
+                const data = snapshot.val();
+                console.log('data', data);
+                let query = $('#SearchBox').val();
+                let matches = [];
+                sourceList = Object.keys(data);
+                for (curSide=0; curSide < sourceList.length; curSide++) {
+                    let sideSources = data[sourceList[curSide]];
+                    for (curSideSource = 0; curSideSource < sideSources.length; curSideSource++) {
+                        let curArticles = sideSources[curSideSource].articles;
+                        for (curArticle = 0; curArticle < curArticles.length; curArticle++) {
+                            let curTitle = curArticles[curArticle].title;
+                            let titleSplit = curTitle.split(' ');
+                            for (wrd = 0; wrd < titleSplit.length; wrd++) {
+                                if (query == titleSplit[wrd]) {
+                                    matches.push(curTitle);
+                                }
+                            }
+                        }
+                    }
+                }
+                if($('#SearchBox').val().length == 0) {
+                    $('#queryDisplay').html('');
+                    $('#queryDisplay').css('background', 'none');
+                    return;
+                } else if (matches.length > 0) {
+                    $('#queryDisplay').html(matches);
+                    $('#queryDisplay').css('background-color', 'white');
+                } else {
+                    $('#queryDisplay').html('no matches');
+                    $('#queryDisplay').css('background-color', 'white');
+                }
+            });
+        });
     });
+
+    $(window).scroll(function() {
+        if ($(this).scrollTop() == 0) {
+            $('#banner').css({
+                    'box-shadow': 'none',
+                    '-moz-box-shadow' : 'none',
+                    '-webkit-box-shadow' : 'none' });
+        }
+        else {
+            /*filter: drop-shadow(0px 4px 4px #3b3b3b);*/
+            $('#banner').css({
+                    'box-shadow': '0px 6px 8px #3b3b3b',
+                    '-moz-box-shadow' : '0px 6px 8px #3b3b3b',
+                    '-webkit-box-shadow' : '0px 6px 8px #3b3b3b' });
+        }
+    });
+
 </script>
 
 </body>
 
     <!-- Company Name & link on banner  -->
+    <div id="topOfPage"></div>
     <div id="banner">
-        <a href="BothSides.html" id="title"><h1>BothSides</h1></a>
-        <a href="Saved.html" id="starButton">Saved<img src="Images/star.png"></img></a>
-       
+        <input id="findBox" type="checkbox" checked=''></input>
+        <img id="findImg" src="Images/MagnifyingGlass.png"></img>
+        <a href="BothSides.html" id="title"><img id="titleImg" src="Images/BothSidesTitle.png"></img></a>
+        <a href="Saved.html" id="starButton"><img src="Images/star.png"></img></a>
+        <!-- input type="search" placeholder="Search For Article.." id="searchInput" onsearch="findArticle()" -->
+        <input placeholder="Search For Article.." id="SearchBox" type="text" size="20"/>
+        <button id="searchButton">Go!</button>
+        <div id="spacing"></div>
+        <p id='queryDisplay'></p>
     </div>
-    
-
 
     <center>
     <ul id="tileList">
         <li id="savedTile1" class="tile">
-            <p class="tileHeadline" id='Headline1'>No news Articles</p>
             <a id="saveStar" href=""><img src="Images/hollowStar2.png" class="tileStar"></img></a>
-
-            <p id="desc1"></p>
+            <b><p class="tileHeadline" id='Headline1'>Headline 1 Headline 1 Headline 1 Headline 1 Headline 1 Headline 1
+                Headline 1 Headline 1 Headline 1
+            </p></b>
+            <p class="content" id="desc1">Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+               sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 
             <a id="leftLink" href="Left.html">LEFT</a>
             <a id="centerLink" href="Mid.html">CENTER</a>
             <a id="rightLink" href="Right.html">RIGHT</a>
         </li>
         <li id="savedTile2" class="tile">
-            <p class="tileHeadline">Headline 2</p>
             <a id="saveStar" href=""><img src="Images/star.png" class="tileStar"></img></a>
+            <b><p class="tileHeadline" id='Headline2'>Headline 2</p></b>
 
-            <p id="tileSubTxt">Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+            <p class="content" id="desc2">Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 
             <a id="leftLink" href="Left.html">LEFT</a>
@@ -277,10 +354,10 @@
             <a id="rightLink" href="Right.html">RIGHT</a>
         </li>
         <li id="savedTile3" class="tile">
-            <p class="tileHeadline">Headline 3</p>
             <a id="saveStar" href=""><img src="Images/hollowStar2.png" class="tileStar"></img></a>
+            <b><p class="tileHeadline" id='Headline3'>Headline 3</p></b>
 
-            <p id="tileSubTxt">Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+            <p class="content" id="desc3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 
             <a id="leftLink" href="Left.html">LEFT</a>
@@ -288,10 +365,10 @@
             <a id="rightLink" href="Right.html">RIGHT</a>
         </li>
         <li id="savedTile4" class="tile">
-            <p class="tileHeadline">Headline 4</p>
             <a id="saveStar" href=""><img src="Images/star.png" class="tileStar"></img></a>
+            <b><p class="tileHeadline" id='Headline4'>Headline 4</p></b>
 
-            <p id="tileSubTxt">Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+            <p class="content" id="desc4">Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 
             <a id="leftLink" href="Left.html">LEFT</a>
@@ -299,10 +376,14 @@
             <a id="rightLink" href="Right.html">RIGHT</a>
         </li>
         <li id="savedTile5" class="tile">
-            <p class="tileHeadline">Headline 5</p>
             <a id="saveStar" href=""><img src="Images/star.png" class="tileStar"></img></a>
-
-            <p id="tileSubTxt">Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+            <b><p class="tileHeadline" id='Headline5'>Headline 5</p></b>
+            
+            <p class="content" id="desc5">Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+               sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+               Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+               sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+               Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 
             <a id="leftLink" href="Left.html">LEFT</a>
@@ -316,7 +397,7 @@
 
 <!-- More -->
 <div id="moreButton">
-	<a href = "#banner">
+	<a href="#topOfPage">
 	<img src = "Images/arrow_down.png"
 	 width = "50px" height = "50px"
 	 alt = "Back to Top" title = "Back to Top">

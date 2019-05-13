@@ -6,7 +6,7 @@ h1 {
 
 body {
     /* background details */
-    background-color:	white;
+    background-color:rgb(173, 173, 173);
     
     /* body font details */
     text-align: center;
@@ -24,7 +24,7 @@ body {
     height: 3.5rem;
     width: 100%;
     color: white;
-    background-color: #888888;
+    background-color: rgb(50, 50, 50);
     padding: 1rem 0 1.5rem 0;
     font-size: 18px;
     text-align: center;

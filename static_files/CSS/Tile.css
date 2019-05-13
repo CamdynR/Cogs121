@@ -10,20 +10,29 @@ ul {
 }
 
 #tileList {
-  color: #696969;
+  color: white;
   font-size: 1.5rem;
 }
 
 .tile {
   width: 90%;
-  height: 225px;
-  background-color: lightgrey;
+  background-color: #696969;
+  border-radius: 7px;
   margin-top: 20px;
   margin-bottom: 20px;
+  padding-bottom: 20px;
+}
+
+#savedTile1 {
+  margin-top: 110px;
 }
 
 #savedTile5 {
   margin-bottom: 75px;
+}
+
+#savedTile1, #savedTile2, #savedTile3, #savedTile4, #savedTile5 {
+  height: auto;
 }
 
 .tileStar {
@@ -31,11 +40,15 @@ ul {
   height: 40px;
   float: left;
   margin-left: 5px;
-  margin-top: -57px;
+  margin-top: 10px;
 }
 
 .tileHeadline {
   padding-top: 12px;
+  padding-right: 8px;
+  max-width: 85%;
+  text-align: left;
+  margin-left: 55px;
 }
 
 #tileSubTxt {
@@ -47,18 +60,34 @@ ul {
 #leftLink {
   background-color: blue;
   padding: 12px 20px 12px 20px;
+  border-radius: 22px 3px 3px 22px;
 }
 
 #centerLink {
-  background-color: #696969;
+  background-color: #494949;
+  border-radius: 3px;
   padding: 12px 10px 12px 10px;
 }
 
 #rightLink {
-  background-color: red;
+  background-color: /*red*/ #3b3b3b;
+  border-radius: 3px 22px 22px 3px;
   padding: 12px 15px 12px 15px;
 }
 
+
 #leftLink, #centerLink, #rightLink {
-  margin-top: 5px;
+  bottom: 5px;
+}
+
+.content {
+  margin-left: 5px;
+  word-spacing: 4px;
+  text-align: left;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+  width: 90%;
+  z-index: 5;
+  padding-bottom: 0px;
 }
