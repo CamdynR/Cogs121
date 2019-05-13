@@ -8,7 +8,12 @@
   // Initialize Firebase
   var config = {
     // Paste Data HERE:
-    
+    apiKey: "AIzaSyBdMvbpg5HHZmCOWkoI45DF6dpEuQXLxxU",
+    authDomain: "bothsides-70e83.firebaseapp.com",
+    databaseURL: "https://bothsides-70e83.firebaseio.com",
+    projectId: "bothsides-70e83",
+    storageBucket: "bothsides-70e83.appspot.com",
+    messagingSenderId: "841983833378"
   };
   firebase.initializeApp(config);
   const database = firebase.database();
@@ -16,6 +21,7 @@
   function getCnnArticles() {
     let cnnurl = 'https://newsapi.org/v2/top-headlines?' +
           'sources=cnn&' +
+          'apiKey=5f5292f795ff4921b8fe0f9384dd7435';
           // 'language=en&' +
     let req = new Request(cnnurl);
     return fetch(req).then(response => response.json());
@@ -24,6 +30,7 @@
   function getFoxArticles() {
     let foxurl = 'https://newsapi.org/v2/top-headlines?' +
           'sources=fox-news&' +
+          'apiKey=5f5292f795ff4921b8fe0f9384dd7435';
           // 'language=en&' +
     let req = new Request(foxurl);
     return fetch(req).then(response => response.json());
@@ -33,6 +40,7 @@
     let bbcurl = 'https://newsapi.org/v2/top-headlines?' +
           'sources=bbc-news&' +
           // 'language=en&' +
+          'apiKey=5f5292f795ff4921b8fe0f9384dd7435';
     let req = new Request(bbcurl);
     return fetch(req).then(response => response.json());
   };
@@ -41,6 +49,7 @@
     let nyturl = 'https://newsapi.org/v2/top-headlines?' +
           'sources=the-new-york-times&' +
           // 'language=en&' +
+          'apiKey=5f5292f795ff4921b8fe0f9384dd7435';
     let req = new Request(nyturl);
     return fetch(req).then(response => response.json());
   };
@@ -49,6 +58,7 @@
     let breiturl = 'https://newsapi.org/v2/top-headlines?' +
           'sources=breitbart-news&' +
           // 'language=en&' +
+          'apiKey=5f5292f795ff4921b8fe0f9384dd7435';
     let req = new Request(breiturl);
     return fetch(req).then(response => response.json());
   };
@@ -57,6 +67,7 @@
     let bloomurl = 'https://newsapi.org/v2/top-headlines?' +
           'sources=bloomberg&' +
           // 'language=en&' +
+          'apiKey=5f5292f795ff4921b8fe0f9384dd7435';
     let req = new Request(bloomurl);
     return fetch(req).then(response => response.json());
   };
@@ -65,6 +76,7 @@
     let usaurl = 'https://newsapi.org/v2/top-headlines?' +
           'sources=usa-today&' +
           // 'language=en&' +
+          'apiKey=5f5292f795ff4921b8fe0f9384dd7435';
     let req = new Request(usaurl);
     return fetch(req).then(response => response.json());
   };
@@ -73,6 +85,7 @@
     let dailyMailurl = 'https://newsapi.org/v2/top-headlines?' +
           'sources=daily-mail&' +
           // 'language=en&' +
+          'apiKey=5f5292f795ff4921b8fe0f9384dd7435';
     let req = new Request(dailyMailurl);
     return fetch(req).then(response => response.json());
   };
@@ -81,6 +94,7 @@
     let msnbcurl = 'https://newsapi.org/v2/top-headlines?' +
           'sources=msnbc&' +
           // 'language=en&' +
+          'apiKey=5f5292f795ff4921b8fe0f9384dd7435';
     let req = new Request(msnbcurl);
     return fetch(req).then(response => response.json());
   };
@@ -116,10 +130,10 @@
     database.ref('history/mid').set(midArticles);
   })();
   setTimeout(function(){ 
-    console.log(cnnArticles.articles);
-    console.log(foxArticles.articles);
-    console.log(nytArticles.articles);
-    console.log(breitbartArticles.articles);
+    // console.log(cnnArticles.articles);
+    // console.log(foxArticles.articles);
+    // console.log(nytArticles.articles);
+    // console.log(breitbartArticles.articles);
     // console.log(bbcArticles.articles);
     let displayArticles = [];
     for (curLeftSource = 0; curLeftSource < leftArticles.length; curLeftSource++) {
@@ -131,7 +145,7 @@
                     let titleB = cleanArticleTitle(rightArticles[curRightSource].articles[curRightArticle].title.toLowerCase());
                     let sim = findSimilarity(titleA, titleB);
                     if (sim > .1) {
-                        console.log(sim, titleA, titleB);
+                        // console.log(sim, titleA, titleB);
                         displayArticle = leftArticles[curLeftSource].articles[curLeftArticle]
                         if (displayArticle.content && displayArticle.description) {
                             displayArticles.push(displayArticle);
@@ -165,12 +179,12 @@
             }
         }
     }
-    console.log(displayArticles);
+    // console.log(displayArticles);
     if (displayArticles.length >= 5) {
         for (i=0; i < 5; i++) {
             let headID = '#Headline' + String(i+1);
             let descID = '#desc' + String(i+1);
-            console.log(headID, descID);
+            // console.log(headID, descID);
             $(headID).html(displayArticles[i].title);
             $(descID).html(displayArticles[i].description);
         }
@@ -317,10 +331,11 @@
     <center>
     <ul id="tileList">
         <li id="savedTile1" class="tile">
-            <p class="tileHeadline" id='Headline1'>No news Articles</p>
+            <p class="tileHeadline" id='Headline1'>Headline 1</p>
             <a id="saveStar" href=""><img src="Images/hollowStar2.png" class="tileStar"></img></a>
 
-            <p id="desc1"></p>
+            <p id="desc1">Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+               sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 
             <a id="leftLink" href="Left.html">LEFT</a>
             <a id="centerLink" href="Mid.html">CENTER</a>
