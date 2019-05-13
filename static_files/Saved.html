@@ -32,7 +32,7 @@
 
         database.ref('saved/article3').set({Title: 'Sample Article 3',   Body: 'This is the text for a sample article. This should be displaying at some point.'});
 
-        database.ref('history/previous').set({Title: 'Previous 7 days', Body: 'These are articles from the previous 7 days.'})
+        //database.ref('history/previous').remove();
 
         database.ref('saved/').once('value', (snapshot) => {
             const data = snapshot.val();
