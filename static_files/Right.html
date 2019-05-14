@@ -41,12 +41,17 @@
       });
     });
   });
+
+  function goBack() {
+    window.history.back();
+  }
 </script>
-<body>
+
+<body id="rightBody">
 
   <!-- Company Name & link on banner  -->
-  <div class="banner" id="Right">
-      <a href="BothSides.html" id="button">
+  <div class="banner" id="rightBanner">
+      <a onclick="goBack()" id="buttonLink">
         <img id="button" src="Images/backbutton.png"> 
       </a>
       <h1 id="politicTitle">Right</h1>
