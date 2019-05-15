@@ -34,14 +34,40 @@
         });
     });
 
-    
+    $(window).scroll(function() {
+        if ($(this).scrollTop() == 0) {
+            $('#banner').css({
+                    'box-shadow': 'none',
+                    '-moz-box-shadow' : 'none',
+                    '-webkit-box-shadow' : 'none' });
+            $('#moreButton').css({'display': 'none'});
+        }
+        else {
+            /*filter: drop-shadow(0px 4px 4px #3b3b3b);*/
+            $('#banner').css({
+                    'box-shadow': '0px 6px 8px #3b3b3b',
+                    '-moz-box-shadow' : '0px 6px 8px #3b3b3b',
+                    '-webkit-box-shadow' : '0px 6px 8px #3b3b3b' });
+            $('#moreButton').css({'display': 'initial'});
+        }
+    });
+
+    function goBack() {
+        window.history.back();
+    }
+
+    function trashButton() {
+        alert("Article removed from saved");
+    }
 </script>
 
 <body>
 
     <!-- Company Name & link on banner  -->
     <div id="banner">
-        <a href="BothSides.html" id="savedBack">< back</a>
+        <a onclick="goBack()" id="buttonLink">
+            <img id="button" src="Images/backbutton.png"> 
+        </a>
         <h1 id="savedTitle">Saved</h1>
     </div>
     <div id="status"></div>
@@ -49,10 +75,10 @@
     <center>
     <ul id="tileList">
         <li id="savedTile2" class="tile">
-            <p class="tileHeadline">Headline 2</p>
-            <button class="trash" id="t2"><i class="fa fa-trash"></i></button>
+            <button class="trash" id="t2" onclick="trashButton()"><i class="fa fa-trash"></i></button>
+            <b><div id="newHeadline"><p class="savedHeadline">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p></div></b>
 
-            <p id="tileSubTxt">Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+            <p class="tileSubTxt">Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 
             <a id="leftLink" href="Left.html">LEFT</a>
@@ -60,10 +86,10 @@
             <a id="rightLink" href="Right.html">RIGHT</a>
         </li>
         <li id="savedTile4" class="tile">
-            <p class="tileHeadline">Headline 4</p>
-            <button class="trash" id="t4"><i class="fa fa-trash"></i></button>
+            <button class="trash" id="t4" onclick="trashButton()"><i class="fa fa-trash"></i></button>
+            <b><div id="newHeadline"><p class="savedHeadline">Headline 4</p></div></b>
 
-            <p id="tileSubTxt">Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+            <p class="tileSubTxt">Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 
             <a id="leftLink" href="Left.html">LEFT</a>
@@ -71,10 +97,10 @@
             <a id="rightLink" href="Right.html">RIGHT</a>
         </li>
         <li id="savedTile5" class="tile">
-            <p class="tileHeadline">Headline 5</p>
-            <button class="trash" id="t5"><i class="fa fa-trash"></i></button>
+            <button class="trash" id="t5" onclick="trashButton()"><i class="fa fa-trash"></i></button>
+            <b><div id="newHeadline"><p class="savedHeadline">Headline 5</p></div></b>
 
-            <p id="tileSubTxt">Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+            <p class="tileSubTxt">Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 
             <a id="leftLink" href="Left.html">LEFT</a>
@@ -87,8 +113,8 @@
 </body>
 
 <!-- More -->
-<div id="BackToTop">
-	<a href = "#banner">
+<div id="moreButton">
+	<a href = "#">
 	<img src = "Images/arrow_down.png"
 	 width = "50px" height = "50px"
 	 alt = "Back to Top" title = "Back to Top">

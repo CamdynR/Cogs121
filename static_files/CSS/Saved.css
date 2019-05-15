@@ -1,9 +1,3 @@
-/* headline configuations */
-h1 {
-    font-family: 'Nanum Gothic';
-    letter-spacing: 0.2rem;
-}
-
 body {
     /* background details */
     background-color:rgb(173, 173, 173);
@@ -19,15 +13,21 @@ body {
 
 /* logo banner area */
 #banner {
+    position: fixed;
+    margin-top: -110px;
     display: flex;
+    height: 96px;
     justify-content: center;
-    height: 3.5rem;
     width: 100%;
     color: white;
-    background-color: rgb(50, 50, 50);
-    padding: 1rem 0 1.5rem 0;
-    font-size: 18px;
+    font-size: 1.35rem;
     text-align: center;
+    background-color: rgb(50, 50, 50);
+}
+
+#savedTitle {
+    align-content: center;
+    margin: 20px 0 28.944px;
 }
 
 #savedBack {
@@ -36,27 +36,65 @@ body {
     font-size: 1.5rem;
     position: absolute;
     left: 10px;
-    top: 48px;
+    top: 42px;
 }
 
-#banner a {
-    color: white;
-    text-decoration: none; 
+#button {
+    position: fixed;
+    left: 0;
+    margin-left: 10px;
+    margin-top: 25px;
+	width: 42px; 
+	height: 42px;
 }
 
-#BackToTop {
+#moreButton {
     position: fixed;
     left: 50%;
     bottom: -1rem;
     transform: translate(-50%, -50%);
     margin: 0 auto;
+    display: none;
 }
 
 .trash {
     float: right;
-    margin-top: -53px;
-    margin-right: 7px;
+    margin-top: 10px;
+    margin-right: 6px;
     background: none;
     border: none;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
+}
+
+.trash:focus {
+    outline: none;
+}
+
+#savedTile2 {
+    margin-top: 110px;
+}
+
+#savedTile2, #savedTile4, #savedTile5 {
+    text-align: left;
+}
+
+.tileSubTxt {
+    margin-left: 19.2px;
+    padding-right: 19.2px;
+    font-size: 1.2rem;
+}
+
+.savedHeadline {
+    margin-top: 10px;
+}
+
+#newHeadline {
+    margin-left: 25px;
+    margin-right: 38px;
+    padding-top: 1px;  
+    font-size: 1.2rem;
+}
+
+#leftLink {
+    margin-left: 5px;
 }

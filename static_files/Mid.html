@@ -41,13 +41,17 @@
         });
     });
   });
+
+  function goBack() {
+    window.history.back();
+  }
 </script>
 
-<body>
+<body id="midBody">
 
   <!-- Company Name & link on banner  -->
-  <div class="banner" id="Mid">
-      <a href="BothSides.html" id="button">
+  <div class="banner" id="midBanner">
+      <a onclick="goBack()" id="buttonLink">
         <img id="button" src="Images/backbutton.png"> 
       </a>
       <h1 id="politicTitle">Center</h1>
@@ -62,12 +66,5 @@
  <img id="authorImage1"></img>
 </div>
 
-
-
-
-
-
 </body>
-
-
 </html>

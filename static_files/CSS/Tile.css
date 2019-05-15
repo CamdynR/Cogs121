@@ -51,26 +51,26 @@ ul {
   margin-left: 55px;
 }
 
-#tileSubTxt {
+.tileSubTxt {
   font-size: 1.2rem;
   margin-top: -5px;
   margin-bottom: 25px;
 }
 
 #leftLink {
-  background-color: blue;
+  background-color: #031D65;
   padding: 12px 20px 12px 20px;
   border-radius: 22px 3px 3px 22px;
 }
 
 #centerLink {
-  background-color: #494949;
+  background-color: rgb(50, 50, 50);
   border-radius: 3px;
   padding: 12px 10px 12px 10px;
 }
 
 #rightLink {
-  background-color: red;
+  background-color: #a70000;
   border-radius: 3px 22px 22px 3px;
   padding: 12px 15px 12px 15px;
 }

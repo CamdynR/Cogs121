@@ -254,9 +254,7 @@
     $(document).ready(() => {
         
         //setTimeout(function(){console.log(cnnArticles)},1000);
-        $('.tileStar').click(() => {
-            alert('Added to Saved!');
-        });
+
         $('#searchButton').click(() => {
             database.ref('history/').once('value', (snapshot) => {
                 const data = snapshot.val();
@@ -284,7 +282,12 @@
                     $('#queryDisplay').css('background', 'none');
                     return;
                 } else if (matches.length > 0) {
-                    $('#queryDisplay').html(matches);
+                    $('#queryDisplay').html('');
+                    const qDisp = document.getElementById("queryDisplay");
+                    for(i = 0; i < matches.length - 1; i++) {
+                        $('#queryDisplay').html($('#queryDisplay').html() + matches[i] + '<br><br>');
+                    }
+                    $('#queryDisplay').html($('#queryDisplay').html() + matches[i]);
                     $('#queryDisplay').css('background-color', 'white');
                 } else {
                     $('#queryDisplay').html('no matches');
@@ -300,6 +303,7 @@
                     'box-shadow': 'none',
                     '-moz-box-shadow' : 'none',
                     '-webkit-box-shadow' : 'none' });
+            $('#moreButton').css({'display': 'none'});
         }
         else {
             /*filter: drop-shadow(0px 4px 4px #3b3b3b);*/
@@ -307,8 +311,33 @@
                     'box-shadow': '0px 6px 8px #3b3b3b',
                     '-moz-box-shadow' : '0px 6px 8px #3b3b3b',
                     '-webkit-box-shadow' : '0px 6px 8px #3b3b3b' });
+            $('#moreButton').css({'display': 'initial'});
         }
     });
+
+    function starClick(img) {
+        const id = "#" + img.id;
+        if($(id).attr('src') == 'Images/hollowStar2.png') {
+            $(id).attr('src', 'Images/star.png');
+        } else {
+            $(id).attr('src', 'Images/hollowStar2.png');
+        }
+    }
+
+    function clearSearch(input) {
+        const qDisp = document.getElementById('queryDisplay');
+        const search = document.getElementById("SearchBox");
+        if(search.value != "") {
+            search.value = "";
+        }
+        if(input.checked != '') {
+           qDisp.style.background = 'none';
+           qDisp.textContent = "";
+        }
+        if(qDisp.textContent == "") {
+            qDisp.style.background = 'none';
+        }
+    }
 
 </script>
 
@@ -317,7 +346,7 @@
     <!-- Company Name & link on banner  -->
     <div id="topOfPage"></div>
     <div id="banner">
-        <input id="findBox" type="checkbox" checked=''></input>
+        <input id="findBox" type="checkbox" checked='' onclick="clearSearch(this)"></input>
         <img id="findImg" src="Images/MagnifyingGlass.png"></img>
         <a href="BothSides.html" id="title"><img id="titleImg" src="Images/BothSidesTitle.png"></img></a>
         <a href="Saved.html" id="starButton"><img src="Images/star.png"></img></a>
@@ -331,9 +360,8 @@
     <center>
     <ul id="tileList">
         <li id="savedTile1" class="tile">
-            <a id="saveStar" href=""><img src="Images/hollowStar2.png" class="tileStar"></img></a>
-            <b><p class="tileHeadline" id='Headline1'>Headline 1 Headline 1 Headline 1 Headline 1 Headline 1 Headline 1
-                Headline 1 Headline 1 Headline 1
+            <img src="Images/hollowStar2.png" class="tileStar" id="firstStar" onclick="starClick(this)"></img>
+            <b><p class="tileHeadline" id='Headline1'>Lorem ipsum dolor sit amet, consectetur adipiscing elit incididunt ut labore et
             </p></b>
             <p class="content" id="desc1">Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
@@ -343,7 +371,7 @@
             <a id="rightLink" href="Right.html">RIGHT</a>
         </li>
         <li id="savedTile2" class="tile">
-            <a id="saveStar" href=""><img src="Images/star.png" class="tileStar"></img></a>
+            <img src="Images/star.png" class="tileStar" id="secondStar" onclick="starClick(this)"></img>
             <b><p class="tileHeadline" id='Headline2'>Headline 2</p></b>
 
             <p class="content" id="desc2">Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
@@ -354,7 +382,7 @@
             <a id="rightLink" href="Right.html">RIGHT</a>
         </li>
         <li id="savedTile3" class="tile">
-            <a id="saveStar" href=""><img src="Images/hollowStar2.png" class="tileStar"></img></a>
+            <img src="Images/hollowStar2.png" class="tileStar" id="thirdStar" onclick="starClick(this)"></img>
             <b><p class="tileHeadline" id='Headline3'>Headline 3</p></b>
 
             <p class="content" id="desc3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
@@ -365,7 +393,7 @@
             <a id="rightLink" href="Right.html">RIGHT</a>
         </li>
         <li id="savedTile4" class="tile">
-            <a id="saveStar" href=""><img src="Images/star.png" class="tileStar"></img></a>
+            <img src="Images/star.png" class="tileStar" id="fourthStar" onclick="starClick(this)"></img>
             <b><p class="tileHeadline" id='Headline4'>Headline 4</p></b>
 
             <p class="content" id="desc4">Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
@@ -376,7 +404,7 @@
             <a id="rightLink" href="Right.html">RIGHT</a>
         </li>
         <li id="savedTile5" class="tile">
-            <a id="saveStar" href=""><img src="Images/star.png" class="tileStar"></img></a>
+            <img src="Images/star.png" class="tileStar" id="fifthStar" onclick="starClick(this)"></img>
             <b><p class="tileHeadline" id='Headline5'>Headline 5</p></b>
             
             <p class="content" id="desc5">Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
@@ -397,7 +425,7 @@
 
 <!-- More -->
 <div id="moreButton">
-	<a href="#topOfPage">
+	<a href="#">
 	<img src = "Images/arrow_down.png"
 	 width = "50px" height = "50px"
 	 alt = "Back to Top" title = "Back to Top">
