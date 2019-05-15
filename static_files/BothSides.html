@@ -132,8 +132,8 @@
                     let titleA = cleanArticleTitle(leftArticles[curLeftSource].articles[curLeftArticle].title.toLowerCase());
                     let titleB = cleanArticleTitle(rightArticles[curRightSource].articles[curRightArticle].title.toLowerCase());
                     let sim = findSimilarity(titleA, titleB);
-                    if (sim > .1) {
-                        // console.log(sim, titleA, titleB);
+                    if (sim > .12) {
+                        console.log(sim, titleA, titleB);
                         displayArticle = leftArticles[curLeftSource].articles[curLeftArticle]
                         if (displayArticle.content && displayArticle.description) {
                             displayArticles.push(displayArticle);
