@@ -14,7 +14,7 @@ body {
 /* logo banner area */
 #banner {
     position: fixed;
-    margin-top: -110px;
+    margin-top: 0px;
     display: flex;
     height: 96px;
     justify-content: center;
@@ -23,6 +23,37 @@ body {
     font-size: 1.35rem;
     text-align: center;
     background-color: rgb(50, 50, 50);
+}
+
+#SearchBar {
+    margin-left: -63px;
+    margin-top: 120px;
+    width: 200px;
+    height: 30px;
+    font-size: 1.2rem;
+    padding-left: 5px;
+}
+
+#SearchButton {
+    position: absolute;
+    margin-left: 3px;
+    margin-top: 121px;
+    height: 34px;
+    width: 60px;
+    color: white;
+    background-color: rgb(100, 100, 100);
+    border: none;
+}
+
+#SearchButton:hover {
+    background-color: rgb(70, 70, 70);
+    border: none;
+    outline: none;
+}
+
+#tileList {
+    margin-top: -70px;
+    margin-bottom: 80px;
 }
 
 #savedTitle {

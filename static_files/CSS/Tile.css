@@ -45,10 +45,10 @@ ul {
 
 .tileHeadline {
   padding-top: 12px;
-  padding-right: 8px;
   max-width: 85%;
   text-align: left;
-  margin-left: 55px;
+  margin-left: 20px;
+  margin-right: 15px;
 }
 
 .tileSubTxt {
@@ -89,5 +89,5 @@ ul {
   hyphens: auto;
   width: 90%;
   z-index: 5;
-  padding-bottom: 0px;
+  padding-bottom: 7px;
 }
