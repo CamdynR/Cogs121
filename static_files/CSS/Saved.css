@@ -70,11 +70,11 @@ body {
     outline: none;
 }
 
-#savedTile2 {
+#searchResult0 {
     margin-top: 110px;
 }
 
-#savedTile2, #savedTile4, #savedTile5 {
+#searchResult0, #searchResult1, #searchResult2, #searchResult3, #searchResult4 {
     text-align: left;
 }
 
@@ -88,7 +88,7 @@ body {
     margin-top: 10px;
 }
 
-#newHeadline {
+#resultHeadline0, #resultHeadline1, #resultHeadline2, #resultHeadline3, #resultHeadline4 {
     margin-left: 25px;
     margin-right: 38px;
     padding-top: 1px;  

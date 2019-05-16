@@ -2,7 +2,7 @@
 <html>
 </script>
     <head>
-            <title>Saved Articles</title>
+            <title>Search</title>
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
@@ -15,22 +15,38 @@
 
 <script type="text/javascript">
     $(document).ready(() => {
-        const database = firebase.database();
-
-        // database.ref('/').remove();
-        
-        database.ref('saved/article1').set({Title: 'Sample Article 1', Body: 'This is the text for a sample article. This should be displaying at some point.'});
-
-        database.ref('saved/article2').set({Title: 'Sample Article 2',   Body: 'This is the text for a sample article. This should be displaying at some point.'});
-
-        database.ref('saved/article3').set({Title: 'Sample Article 3',   Body: 'This is the text for a sample article. This should be displaying at some point.'});
-
-        //database.ref('history/previous').remove();
-
-        database.ref('saved/').once('value', (snapshot) => {
-            const data = snapshot.val();
-            console.log('You received some data!', data);
-            $('#status').html('Saved Articles: ' + Object.keys(data));
+        $('#tileList').hide();
+        $('#SearchButton').click(async function getResults() {
+            let query = $('#SearchBar').val();
+            let searchURL = 'https://newsapi.org/v2/everything?' +
+            'q=' + query +
+            '&apiKey=5f5292f795ff4921b8fe0f9384dd7435';
+            let req = new Request(searchURL);
+            result = await fetch(req).then(response => response.json());
+            setTimeout(function(){
+                console.log(result);
+                for (i=0; i < 5; i++) {
+                    let tileID = 'searchResult' + String(i);
+                    let headID = 'resultHeadline' + String(i);
+                    let descID = 'resultDesc' + String(i); 
+                    if (i >= result.articles.length) {
+                        if (i == 0) {
+                            $('#'+headID).html('No Results.');
+                            $('#'+descID).html('Make sure to type the keyword exactly right!');
+                        }
+                        else {
+                            $('#'+tileID).hide();
+                        }
+                    }
+                    else { 
+                        if (result.articles[i].description && result.articles[i].content) {
+                            $('#'+headID).html(result.articles[i].title);
+                            $('#'+descID).html(result.articles[i].description);
+                        }
+                    }
+                }
+                $('#tileList').show();
+            }, 200);
         });
     });
 
@@ -59,6 +75,7 @@
     function trashButton() {
         alert("Article removed from saved");
     }
+
 </script>
 
 <body>
@@ -73,39 +90,42 @@
     <div id="status"></div>
 
     <center>
+    <input type="text" id='SearchBar' placeholder="Search Here!"></input><button id='SearchButton'>Go!</button>
     <ul id="tileList">
-        <li id="savedTile2" class="tile">
-            <button class="trash" id="t2" onclick="trashButton()"><i class="fa fa-trash"></i></button>
-            <b><div id="newHeadline"><p class="savedHeadline">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p></div></b>
+        <li id="searchResult0" class="tile">
+            <b><div id="resultHeadline0"><p class="savedHeadline">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p></div></b>
 
-            <p class="tileSubTxt">Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+            <p class="tileSubTxt" id='resultDesc0'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 
-            <a id="leftLink" href="Left.html">LEFT</a>
-            <a id="centerLink" href="Mid.html">CENTER</a>
-            <a id="rightLink" href="Right.html">RIGHT</a>
         </li>
-        <li id="savedTile4" class="tile">
-            <button class="trash" id="t4" onclick="trashButton()"><i class="fa fa-trash"></i></button>
-            <b><div id="newHeadline"><p class="savedHeadline">Headline 4</p></div></b>
+        <li id="searchResult1" class="tile">
+            <b><div id="resultHeadline1"><p class="savedHeadline">Headline 4</p></div></b>
 
-            <p class="tileSubTxt">Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+            <p class="tileSubTxt" id='resultDesc1'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 
-            <a id="leftLink" href="Left.html">LEFT</a>
-            <a id="centerLink" href="Mid.html">CENTER</a>
-            <a id="rightLink" href="Right.html">RIGHT</a>
         </li>
-        <li id="savedTile5" class="tile">
-            <button class="trash" id="t5" onclick="trashButton()"><i class="fa fa-trash"></i></button>
-            <b><div id="newHeadline"><p class="savedHeadline">Headline 5</p></div></b>
+        <li id="searchResult2" class="tile">
+            <b><div id="resultHeadline2"><p class="savedHeadline">Headline 5</p></div></b>
 
-            <p class="tileSubTxt">Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+            <p class="tileSubTxt" id='resultDesc2'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 
-            <a id="leftLink" href="Left.html">LEFT</a>
-            <a id="centerLink" href="Mid.html">CENTER</a>
-            <a id="rightLink" href="Right.html">RIGHT</a>
+        </li>
+        <li id="searchResult3" class="tile">
+            <b><div id="resultHeadline3"><p class="savedHeadline">Headline 5</p></div></b>
+
+            <p class="tileSubTxt" id='resultDesc3'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+               sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+
+        </li>
+        <li id="searchResult4" class="tile">
+            <b><div id="resultHeadline4"><p class="savedHeadline">Headline 5</p></div></b>
+
+            <p class="tileSubTxt" id='resultDesc4'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+               sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+
         </li>
     </ul>
     </center>
