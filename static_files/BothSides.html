@@ -124,6 +124,7 @@
     // console.log(breitbartArticles.articles);
     // console.log(bbcArticles.articles);
     let displayArticles = [];
+    let iframeArticles = [];
     for (curLeftSource = 0; curLeftSource < leftArticles.length; curLeftSource++) {
         for (curLeftArticle = 0; curLeftArticle < leftArticles[curLeftSource].articles.length; curLeftArticle++) {
             for (curRightSource = 0; curRightSource < rightArticles.length; curRightSource++) {
@@ -133,10 +134,17 @@
                     let titleB = cleanArticleTitle(rightArticles[curRightSource].articles[curRightArticle].title.toLowerCase());
                     let sim = findSimilarity(titleA, titleB);
                     if (sim > .12) {
-                        console.log(sim, titleA, titleB);
+                        //console.log(sim, titleA, titleB);
                         displayArticle = leftArticles[curLeftSource].articles[curLeftArticle]
+                        
+                        //iFrame Usage
+                        iframeLeft = leftArticles[curLeftSource].articles[curLeftArticle]
+                        iframeRight = rightArticles[curRightSource].articles[curRightArticle]
+
                         if (displayArticle.content && displayArticle.description) {
                             displayArticles.push(displayArticle);
+                            iframeArticles.push(iframeLeft);
+                            iframeArticles.push(iframeRight);
                         }
                         
                     }
@@ -150,13 +158,14 @@
                                 let simAB = findSimilarity(titleA, titleC);
                                 let simBC = findSimilarity(titleB, titleC);
                                 if (simAB > .2 || simBC > .2) {
-                                    console.log(titleA);
-                                    console.log(titleB);
-                                    console.log(titleC);
-                                    console.log('----------------------------------');
+                                    //console.log(titleA);
+                                    //console.log(titleB);
+                                    //console.log(titleC);
+                                    //console.log('----------------------------------');
                                     // $('#Headline1').html(titleC);
                                     // $('#desc1').html(midArticles[curMidSource].articles[curMidArticle].description);
                                     if (midArticles[curMidSource].articles[curMidArticle].content && midArticles[curMidSource].articles[curMidArticle].description) {
+                                        //iframeArticles.push(midArticles[curMidSource].articles[curMidArticle]);
                                         displayArticles.push(midArticles[curMidSource].articles[curMidArticle]);
                                     }
                                 }
@@ -167,22 +176,43 @@
             }
         }
     }
-    // console.log(displayArticles);
+    //console.log(iframeArticles);
+    //console.log(displayArticles);
     if (displayArticles.length >= 5) {
+        let k = 1;
         for (i=0; i < 5; i++) {
             let headID = '#Headline' + String(i+1);
             let descID = '#desc' + String(i+1);
+
+            let urlLeft = '#urlLeft' + String(i+1);
+            let urlRight = '#urlRight' + String(i+1);
+
             // console.log(headID, descID);
             $(headID).html(displayArticles[i].title);
             $(descID).html(displayArticles[i].description);
+
+            
+            $(urlLeft).html(iframeArticles[i*2].url);
+            $(urlRight).html(iframeArticles[k].url);
+            k = k + 2;
         }
     }
     else {
+        let k = 1;
         for (i=0; i < displayArticles.length; i++) {
             headID = '#Headline' + String(i+1);
             descID = '#desc' + String(i+1);
+
+            let urlLeft = '#urlLeft' + String(i+1);
+            let urlRight = '#urlRight' + String(i+1);
+
             $(headID).html(displayArticles[i].title);
             $(descID).html(displayArticles[i].description);
+
+
+            $(urlLeft).html(iframeArticles[i*2].url);
+            $(urlRight).html(iframeArticles[k].url);
+            k = k + 2;
         }
     }
   }, 2000);
@@ -365,10 +395,14 @@
             </p></b>
             <p class="content" id="desc1">Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+               
+            <p hidden id="urlLeft1">This url should be hidden.</p>
+            <p hidden id="urlRight1">This url should be hidden.</p>
+            <p hidden id="urlCenter1">This url should be hidden.</p>
 
-            <a id="leftLink" href="Left.html">LEFT</a>
-            <a id="centerLink" href="Mid.html">CENTER</a>
-            <a id="rightLink" href="Right.html">RIGHT</a>
+            <a id="leftLink" onclick="getLeft('urlLeft1')">LEFT</a>
+            <a id="centerLink" onclick="getCenter('urlRight1')">CENTER</a>
+            <a id="rightLink" onclick="getRight('urlCenter1')">RIGHT</a>
         </li>
         <li id="savedTile2" class="tile">
             <!-- <img src="Images/star.png" class="tileStar" id="secondStar" onclick="starClick(this)"></img> -->
@@ -377,9 +411,13 @@
             <p class="content" id="desc2">Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 
-            <a id="leftLink" href="Left.html">LEFT</a>
-            <a id="centerLink" href="Mid.html">CENTER</a>
-            <a id="rightLink" href="Right.html">RIGHT</a>
+            <p hidden id="urlLeft2">This url should be hidden.</p>
+            <p hidden id="urlRight2">This url should be hidden.</p>
+            <p hidden id="urlCenter2">This url should be hidden.</p>
+
+            <a id="leftLink" onclick="getLeft('urlLeft2')">LEFT</a>
+            <a id="centerLink" onclick="getCenter('urlCenter2')">CENTER</a>
+            <a id="rightLink" onclick="getRight('urlRight2')">RIGHT</a>
         </li>
         <li id="savedTile3" class="tile">
             <!-- <img src="Images/hollowStar2.png" class="tileStar" id="thirdStar" onclick="starClick(this)"></img> -->
@@ -387,10 +425,14 @@
 
             <p class="content" id="desc3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            
+            <p hidden id="urlLeft3">This url should be hidden.</p>
+            <p hidden id="urlRight3">This url should be hidden.</p>
+            <p hidden id="urlCenter3">This url should be hidden.</p>
 
-            <a id="leftLink" href="Left.html">LEFT</a>
-            <a id="centerLink" href="Mid.html">CENTER</a>
-            <a id="rightLink" href="Right.html">RIGHT</a>
+            <a id="leftLink" onclick="getLeft('urlLeft3')">LEFT</a>
+            <a id="centerLink" onclick="getCenter('urlCenter3')">CENTER</a>
+            <a id="rightLink" onclick="getRight('urlRight3')">RIGHT</a>
         </li>
         <li id="savedTile4" class="tile">
             <!-- <img src="Images/star.png" class="tileStar" id="fourthStar" onclick="starClick(this)"></img> -->
@@ -399,9 +441,14 @@
             <p class="content" id="desc4">Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 
-            <a id="leftLink" href="Left.html">LEFT</a>
-            <a id="centerLink" href="Mid.html">CENTER</a>
-            <a id="rightLink" href="Right.html">RIGHT</a>
+            <p hidden id="urlLeft4">This url should be hidden.</p>
+            <p hidden id="urlRight4">This url should be hidden.</p>
+            <p hidden id="urlCenter4">This url should be hidden.</p>
+
+            <a id="leftLink" onclick="getLeft('urlLeft4')">LEFT</a>
+            <a id="centerLink" onclick="getCenter('urlCenter4')">CENTER</a>
+            <a id="rightLink" onclick="getRight('urlRight4')">RIGHT</a>
+            
         </li>
         <li id="savedTile5" class="tile">
             <!-- <img src="Images/star.png" class="tileStar" id="fifthStar" onclick="starClick(this)"></img> -->
@@ -413,13 +460,35 @@
                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            
+            <p hidden id="urlLeft5">This url should be hidden.</p>
+            <p hidden id="urlRight5">This url should be hidden.</p>
+            <p hidden id="urlCenter5">This url should be hidden.</p>
 
-            <a id="leftLink" href="Left.html">LEFT</a>
-            <a id="centerLink" href="Mid.html">CENTER</a>
-            <a id="rightLink" href="Right.html">RIGHT</a>
+            <a id="leftLink" onclick="getLeft('urlLeft5')">LEFT</a>
+            <a id="centerLink" onclick="getCenter('urlCenter5')">CENTER</a>
+            <a id="rightLink" onclick="getRight('urlRight5')">RIGHT</a>
         </li>
     </ul>
     </center>
+
+    <script>
+        function getLeft(elem){
+            let url = document.getElementById(elem).textContent;
+            console.log(url)
+        }
+
+        function getCenter(elem){
+            let url = document.getElementById(elem).textContent;
+            console.log(url)
+        }
+
+        function getRight(elem){
+            let url = document.getElementById(elem).textContent;
+            console.log(url)
+        }
+    </script>
+
 
 </body>
 
