@@ -176,7 +176,7 @@
             }
         }
     }
-    //console.log(iframeArticles);
+    console.log(iframeArticles);
     //console.log(displayArticles);
     if (displayArticles.length >= 5) {
         let k = 1;
@@ -187,6 +187,9 @@
             let urlLeft = '#urlLeft' + String(i+1);
             let urlRight = '#urlRight' + String(i+1);
 
+            let textLeft = '#textLeft' + String(i+1);
+            let textRight = '#textRight' + String(i+1);
+
             // console.log(headID, descID);
             $(headID).html(displayArticles[i].title);
             $(descID).html(displayArticles[i].description);
@@ -194,6 +197,9 @@
             
             $(urlLeft).html(iframeArticles[i*2].url);
             $(urlRight).html(iframeArticles[k].url);
+            
+            $(textLeft).html(iframeArticles[i*2].content);
+            $(textRight).html(iframeArticles[k].content);
             k = k + 2;
         }
     }
@@ -212,6 +218,9 @@
 
             $(urlLeft).html(iframeArticles[i*2].url);
             $(urlRight).html(iframeArticles[k].url);
+
+            $(textLeft).html(iframeArticles[i*2].content);
+            $(textRight).html(iframeArticles[k].content);
             k = k + 2;
         }
     }
@@ -282,7 +291,13 @@
 <script src="Javascript/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
     $(document).ready(() => {
-        
+
+        $(".popup").hide();
+        $(".close").click(function () {
+            $(this).parent().fadeOut("slow");
+            $(".links").fadeIn("slow");
+        });
+
         //setTimeout(function(){console.log(cnnArticles)},1000);
 
         $('#searchButton').click(() => {
@@ -400,9 +415,13 @@
             <p hidden id="urlRight1">This url should be hidden.</p>
             <p hidden id="urlCenter1">This url should be hidden.</p>
 
-            <a id="leftLink" onclick="getLeft('urlLeft1')">LEFT</a>
-            <a id="centerLink" onclick="getCenter('urlRight1')">CENTER</a>
-            <a id="rightLink" onclick="getRight('urlCenter1')">RIGHT</a>
+            <p hidden id="textLeft1">This text should be hidden.</p>
+            <p hidden id="textRight1">This text should be hidden.</p>
+            <p hidden id="textCenter1">This text should be hidden.</p>
+
+            <a id="leftLink" onclick="getLeft('urlLeft1', 'textLeft1')">LEFT</a>
+            <a id="centerLink" onclick="getCenter('urlCenter1', 'textCenter1')">CENTER</a>
+            <a id="rightLink" onclick="getRight('urlRight1', 'textRight1')">RIGHT</a>
         </li>
         <li id="savedTile2" class="tile">
             <!-- <img src="Images/star.png" class="tileStar" id="secondStar" onclick="starClick(this)"></img> -->
@@ -415,9 +434,13 @@
             <p hidden id="urlRight2">This url should be hidden.</p>
             <p hidden id="urlCenter2">This url should be hidden.</p>
 
-            <a id="leftLink" onclick="getLeft('urlLeft2')">LEFT</a>
-            <a id="centerLink" onclick="getCenter('urlCenter2')">CENTER</a>
-            <a id="rightLink" onclick="getRight('urlRight2')">RIGHT</a>
+            <p hidden id="textLeft2">This text should be hidden.</p>
+            <p hidden id="textRight2">This text should be hidden.</p>
+            <p hidden id="textCenter2">This text should be hidden.</p>
+
+            <a id="leftLink" onclick="getLeft('urlLeft2', 'textLeft2')">LEFT</a>
+            <a id="centerLink" onclick="getCenter('urlCenter2', 'textCenter2')">CENTER</a>
+            <a id="rightLink" onclick="getRight('urlRight2', 'textRight2')">RIGHT</a>
         </li>
         <li id="savedTile3" class="tile">
             <!-- <img src="Images/hollowStar2.png" class="tileStar" id="thirdStar" onclick="starClick(this)"></img> -->
@@ -430,9 +453,13 @@
             <p hidden id="urlRight3">This url should be hidden.</p>
             <p hidden id="urlCenter3">This url should be hidden.</p>
 
-            <a id="leftLink" onclick="getLeft('urlLeft3')">LEFT</a>
-            <a id="centerLink" onclick="getCenter('urlCenter3')">CENTER</a>
-            <a id="rightLink" onclick="getRight('urlRight3')">RIGHT</a>
+            <p hidden id="textLeft3">This text should be hidden.</p>
+            <p hidden id="textRight3">This text should be hidden.</p>
+            <p hidden id="textCenter3">This text should be hidden.</p>
+
+            <a id="leftLink" onclick="getLeft('urlLeft3', 'textLeft3')">LEFT</a>
+            <a id="centerLink" onclick="getCenter('urlCenter3', 'textCenter3')">CENTER</a>
+            <a id="rightLink" onclick="getRight('urlRight3', 'textRight3')">RIGHT</a>
         </li>
         <li id="savedTile4" class="tile">
             <!-- <img src="Images/star.png" class="tileStar" id="fourthStar" onclick="starClick(this)"></img> -->
@@ -445,9 +472,13 @@
             <p hidden id="urlRight4">This url should be hidden.</p>
             <p hidden id="urlCenter4">This url should be hidden.</p>
 
-            <a id="leftLink" onclick="getLeft('urlLeft4')">LEFT</a>
-            <a id="centerLink" onclick="getCenter('urlCenter4')">CENTER</a>
-            <a id="rightLink" onclick="getRight('urlRight4')">RIGHT</a>
+            <p hidden id="textLeft4">This text should be hidden.</p>
+            <p hidden id="textRight4">This text should be hidden.</p>
+            <p hidden id="textCenter4">This text should be hidden.</p>
+
+            <a id="leftLink" onclick="getLeft('urlLeft4', 'textLeft4')">LEFT</a>
+            <a id="centerLink" onclick="getCenter('urlCenter4', 'textCenter4')">CENTER</a>
+            <a id="rightLink" onclick="getRight('urlRight4', 'textRight4')">RIGHT</a>
             
         </li>
         <li id="savedTile5" class="tile">
@@ -465,29 +496,83 @@
             <p hidden id="urlRight5">This url should be hidden.</p>
             <p hidden id="urlCenter5">This url should be hidden.</p>
 
-            <a id="leftLink" onclick="getLeft('urlLeft5')">LEFT</a>
-            <a id="centerLink" onclick="getCenter('urlCenter5')">CENTER</a>
-            <a id="rightLink" onclick="getRight('urlRight5')">RIGHT</a>
+            <p hidden id="textLeft5">This text should be hidden.</p>
+            <p hidden id="textRight5">This text should be hidden.</p>
+            <p hidden id="textCenter5">This text should be hidden.</p>
+
+            <a id="leftLink" onclick="getLeft('urlLeft5', 'textLeft5')">LEFT</a>
+            <a id="centerLink" onclick="getCenter('urlCenter5', 'textCenter5')">CENTER</a>
+            <a id="rightLink" onclick="getRight('urlRight5', 'textRight5')">RIGHT</a>
         </li>
     </ul>
     </center>
 
     <script>
-        function getLeft(elem){
-            let url = document.getElementById(elem).textContent;
-            console.log(url)
+        function getLeft(site, body){
+            let url = document.getElementById(site).textContent;       
+            let content = document.getElementById(body).textContent;
+
+            $('#tileList').fadeOut("slow");
+            $('#moreButton').fadeOut("slow");
+
+            let doc = document.getElementById('iframe').contentWindow.document;
+            doc.open();
+            doc.write(content);
+            doc.close();
+            
+            document.getElementById("articleLink").href=url;
+
+            $(".popup").fadeIn('slow');
         }
 
-        function getCenter(elem){
-            let url = document.getElementById(elem).textContent;
-            console.log(url)
+        function getCenter(site, body){
+            let url = document.getElementById(site).textContent; 
+            let content = document.getElementById(body).textContent;      
+
+            $('#tileList').fadeOut("slow");
+            $('#moreButton').fadeOut("slow");
+
+            let doc = document.getElementById('iframe').contentWindow.document;
+            doc.open();
+            doc.write(content);
+            doc.close();
+            
+            document.getElementById("articleLink").href=url;
+
+            $(".popup").fadeIn('slow');
         }
 
-        function getRight(elem){
-            let url = document.getElementById(elem).textContent;
-            console.log(url)
+        function getRight(site, body){
+            let url = document.getElementById(site).textContent;  
+            let content = document.getElementById(body).textContent;     
+
+            $('#tileList').fadeOut("slow");
+            $('#moreButton').fadeOut("slow");
+
+            let doc = document.getElementById('iframe').contentWindow.document;
+            doc.open();
+            doc.write(content);
+            doc.close();
+
+            document.getElementById("articleLink").href=url;
+            
+
+            $(".popup").fadeIn('slow');
+        }
+
+        function reopen(){
+            $('#tileList').fadeIn("slow");
+            $('#moreButton').fadeIn("slow");
         }
     </script>
+
+    <div class="popup">
+        <a id ="articleLink" href=""><button class="iframe-button">Link To Article</button></a>
+        <iframe id ="iframe" src="">
+            <p>Your browser does not support iframes.</p>
+        </iframe>
+        <a href="#" class="close" onclick="reopen()">X</a>
+    </div>
 
 
 </body>

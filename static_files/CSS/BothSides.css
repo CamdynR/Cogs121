@@ -138,6 +138,11 @@ input[type="checkbox"] {
     z-index: 7;
 }
 
+#iframe {
+    width: 90%;
+    height:90vh;
+}
+
 input[type="checkbox"]:checked ~ #SearchBox {
     display: none;
 }
