@@ -5,7 +5,7 @@ body {
     /* body font details */
     text-align: center;
     font-family: 'Nanum Gothic';
-    color: black;
+    color: white;
     font-size: 16px;
     margin: 0;
     padding: 0; 
@@ -138,10 +138,57 @@ input[type="checkbox"] {
     z-index: 7;
 }
 
+/* iframe window pop-up CSS */
 #iframe {
     width: 90%;
-    height:90vh;
+    box-sizing: border-box;
+    height: 300px;
+    margin-top: 20px;
+    background-color: #696969;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    padding-top: 5px;
+    padding-left: 10px;
+    padding-right: 10px
 }
+
+.popup {
+    background-color: rgb(173, 173, 173);
+    height: 300px;
+    width: 100%;
+}
+
+#iframeBanner {
+    width: 100%;
+    height: 95px;
+    margin-top: -27px;
+    justify-content: center;
+    text-align: center;
+}
+
+#iframeSide {
+    font-size: 2.5rem;
+    text-align: center;
+    padding-top: 25px;
+}
+
+.iframe-button {
+    width: 150px;
+    height: 30px;
+    border: none;
+    font-size: 1.1rem;
+    margin-top: 10px;
+    background-color: rgb(224, 224, 224);
+}
+
+#exitFrame {
+    font-size: 1.25rem;
+    position: fixed;
+    margin-top: 60px;
+    margin-left: -90px
+}
+/* end of iframe window CSS */
 
 input[type="checkbox"]:checked ~ #SearchBox {
     display: none;

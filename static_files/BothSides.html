@@ -525,6 +525,22 @@
             doc.open();
             doc.write(content);
             doc.close();
+
+            let iframeSide = document.getElementById('iframeSide');
+            iframeSide.textContent = 'Left';
+
+            let iframeBanner = document.getElementById('iframeBanner');
+            iframeBanner.style.backgroundColor = '#031D65';
+
+            var iframe = document.getElementById('iframe');
+            var style = document.createElement('style');
+            style.textContent =
+                'body {' +
+                '  color: white;' +
+                '  font-family: sans-serif;' +
+                '  font-size: 1.2rem;' +
+                '}'
+            iframe.contentDocument.head.appendChild(style);
             
             document.getElementById("articleLink").href=url;
 
@@ -542,6 +558,22 @@
             doc.open();
             doc.write(content);
             doc.close();
+
+            let iframeSide = document.getElementById('iframeSide');
+            iframeSide.textContent = 'Center';
+
+            let iframeBanner = document.getElementById('iframeBanner');
+            iframeBanner.style.backgroundColor = 'rgb(50, 50, 50)';
+
+            var iframe = document.getElementById('iframe');
+            var style = document.createElement('style');
+            style.textContent =
+                'body {' +
+                '  color: white;' +
+                '  font-family: sans-serif;' +
+                '  font-size: 1.2rem;' +
+                '}'
+            iframe.contentDocument.head.appendChild(style);
             
             document.getElementById("articleLink").href=url;
 
@@ -560,6 +592,22 @@
             doc.write(content);
             doc.close();
 
+            let iframeSide = document.getElementById('iframeSide');
+            iframeSide.textContent = 'Right';
+
+            let iframeBanner = document.getElementById('iframeBanner');
+            iframeBanner.style.backgroundColor = '#a70000';
+
+            var iframe = document.getElementById('iframe');
+            var style = document.createElement('style');
+            style.textContent =
+                'body {' +
+                '  color: white;' +
+                '  font-family: sans-serif;' +
+                '  font-size: 1.2rem;' +
+                '}'
+            iframe.contentDocument.head.appendChild(style);
+
             document.getElementById("articleLink").href=url;
             
 
@@ -573,11 +621,14 @@
     </script>
 
     <div class="popup">
-        <a id ="articleLink" href=""><button class="iframe-button">Link To Article</button></a>
+        <div id="iframeBanner">
+            <h1 id="iframeSide"></h1>
+        </div>
         <iframe id ="iframe" src="">
             <p>Your browser does not support iframes.</p>
         </iframe>
-        <a href="#" class="close" onclick="reopen()">X</a>
+        <a id ="articleLink" href=""><button class="iframe-button">Go to Article</button></a>
+        <a id ="exitFrame" href="#" class="close" onclick="reopen()">exit</a>
     </div>
 
 
