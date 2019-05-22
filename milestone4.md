@@ -12,7 +12,7 @@
 
 # UI Improvements: 
 
-Our latest UI includes frames for each side of the news story. Users are taken to a separate page once they click on the point of view they want to read and are given a brief preview of the aricle. There is also a link to the external news source. A search page has also been added so that users can search and see results on a separate page for a cleaner look. Additionally, the favorites/saved option was omitted so users can simply use the application wtihout creating accounts for a low commitment experience.  
+Our latest UI includes frames for each side of the news story. Users are taken to a separate page once they click on the point of view they want to read and are given a brief preview of the aricle. There is also a link to the external news source. A search page has also been added so that users can search and see results on a separate page, unlike our last UI where search was done all on the home page. Additionally, the favorites/saved option was omitted so users can simply use the application wtihout creating accounts for a low commitment experience.  
 
 
 # User Action 1 Explanation: 
