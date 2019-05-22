@@ -28,7 +28,8 @@
                 for (i=0; i < 5; i++) {
                     let tileID = 'searchResult' + String(i);
                     let headID = 'resultHeadline' + String(i);
-                    let descID = 'resultDesc' + String(i); 
+                    let descID = 'resultDesc' + String(i);
+                    let urlID = 'resultURL' + String(i); 
                     if (i >= result.articles.length) {
                         if (i == 0) {
                             $('#'+headID).html('No Results.');
@@ -39,9 +40,11 @@
                         }
                     }
                     else { 
-                        if (result.articles[i].description && result.articles[i].content) {
+                        if (result.articles[i].description && result.articles[i].content && result.articles[i].url) {
                             $('#'+headID).html(result.articles[i].title);
                             $('#'+descID).html(result.articles[i].description);
+                            $('#'+urlID).attr('href', result.articles[i].url);
+                            
                         }
                     }
                 }
@@ -98,6 +101,8 @@
             <p class="tileSubTxt" id='resultDesc0'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 
+            <a id ="resultURL0" href=""><button>Link To Article</button></a>
+
         </li>
         <li id="searchResult1" class="tile">
             <b><div id="resultHeadline1"><p class="savedHeadline">Headline 4</p></div></b>
@@ -105,6 +110,7 @@
             <p class="tileSubTxt" id='resultDesc1'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 
+            <a id ="resultURL1" href=""><button>Link To Article</button></a>
         </li>
         <li id="searchResult2" class="tile">
             <b><div id="resultHeadline2"><p class="savedHeadline">Headline 5</p></div></b>
@@ -112,6 +118,7 @@
             <p class="tileSubTxt" id='resultDesc2'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 
+            <a id ="resultURL2" href=""><button>Link To Article</button></a>
         </li>
         <li id="searchResult3" class="tile">
             <b><div id="resultHeadline3"><p class="savedHeadline">Headline 5</p></div></b>
@@ -119,12 +126,15 @@
             <p class="tileSubTxt" id='resultDesc3'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 
+            <a id ="resultURL3" href=""><button>Link To Article</button></a>
         </li>
         <li id="searchResult4" class="tile">
             <b><div id="resultHeadline4"><p class="savedHeadline">Headline 5</p></div></b>
 
             <p class="tileSubTxt" id='resultDesc4'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+
+            <a id ="resultURL4" href=""><button>Link To Article</button></a>
 
         </li>
     </ul>

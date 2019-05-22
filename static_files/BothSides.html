@@ -125,10 +125,10 @@
     // console.log(bbcArticles.articles);
     let displayArticles = [];
     let iframeArticles = [];
+    let isSim = false;
     for (curLeftSource = 0; curLeftSource < leftArticles.length; curLeftSource++) {
         for (curLeftArticle = 0; curLeftArticle < leftArticles[curLeftSource].articles.length; curLeftArticle++) {
             for (curRightSource = 0; curRightSource < rightArticles.length; curRightSource++) {
-                //console.log(rightArticles[curRightSource].articles[0].source);
                 for (curRightArticle = 0; curRightArticle < rightArticles[curRightSource].articles.length; curRightArticle++) {
                     let titleA = cleanArticleTitle(leftArticles[curLeftSource].articles[curLeftArticle].title.toLowerCase());
                     let titleB = cleanArticleTitle(rightArticles[curRightSource].articles[curRightArticle].title.toLowerCase());
@@ -145,35 +145,39 @@
                             displayArticles.push(displayArticle);
                             iframeArticles.push(iframeLeft);
                             iframeArticles.push(iframeRight);
+                            isSim = true;
                         }
                         
                     }
-                    if (sim > .5) {
-                        // console.log(titleA);
-                        // console.log(titleB);
-                        // console.log('--------------------------------------');
-                        for (curMidSource = 0; curMidSource < midArticles.length; curMidSource++) {
-                            for (curMidArticle = 0; curMidArticle < midArticles[curMidSource].articles.length; curMidArticle++) {
-                                let titleC = cleanArticleTitle(midArticles[curMidSource].articles[curMidArticle].title.toLowerCase());
-                                let simAB = findSimilarity(titleA, titleC);
-                                let simBC = findSimilarity(titleB, titleC);
-                                if (simAB > .2 || simBC > .2) {
-                                    //console.log(titleA);
-                                    //console.log(titleB);
-                                    //console.log(titleC);
-                                    //console.log('----------------------------------');
-                                    // $('#Headline1').html(titleC);
-                                    // $('#desc1').html(midArticles[curMidSource].articles[curMidArticle].description);
-                                    if (midArticles[curMidSource].articles[curMidArticle].content && midArticles[curMidSource].articles[curMidArticle].description) {
-                                        //iframeArticles.push(midArticles[curMidSource].articles[curMidArticle]);
-                                        displayArticles.push(midArticles[curMidSource].articles[curMidArticle]);
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    if (isSim) break;
+                    // if (sim > .5) {
+                    //     // console.log(titleA);
+                    //     // console.log(titleB);
+                    //     // console.log('--------------------------------------');
+                    //     for (curMidSource = 0; curMidSource < midArticles.length; curMidSource++) {
+                    //         for (curMidArticle = 0; curMidArticle < midArticles[curMidSource].articles.length; curMidArticle++) {
+                    //             let titleC = cleanArticleTitle(midArticles[curMidSource].articles[curMidArticle].title.toLowerCase());
+                    //             let simAB = findSimilarity(titleA, titleC);
+                    //             let simBC = findSimilarity(titleB, titleC);
+                    //             if (simAB > .2 || simBC > .2) {
+                    //                 //console.log(titleA);
+                    //                 //console.log(titleB);
+                    //                 //console.log(titleC);
+                    //                 //console.log('----------------------------------');
+                    //                 // $('#Headline1').html(titleC);
+                    //                 // $('#desc1').html(midArticles[curMidSource].articles[curMidArticle].description);
+                    //                 if (midArticles[curMidSource].articles[curMidArticle].content && midArticles[curMidSource].articles[curMidArticle].description) {
+                    //                     //iframeArticles.push(midArticles[curMidSource].articles[curMidArticle]);
+                    //                     displayArticles.push(midArticles[curMidSource].articles[curMidArticle]);
+                    //                 }
+                    //             }
+                    //         }
+                    //     }
+                    // }
                 }
+                if (isSim) break;
             }
+            isSim = false;
         }
     }
     console.log(iframeArticles);
@@ -224,6 +228,7 @@
             k = k + 2;
         }
     }
+    $('#tileList').show();
   }, 2000);
   function findSimilarity(title1, title2) {
     
@@ -297,6 +302,7 @@
             $(this).parent().fadeOut("slow");
             $(".links").fadeIn("slow");
         });
+        $('#tileList').hide();
 
         //setTimeout(function(){console.log(cnnArticles)},1000);
 
