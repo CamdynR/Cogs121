@@ -2,11 +2,11 @@
 
 ![Image of Home Page](https://github.com/CamdynR/Cogs121/blob/master/Screenshots/Screen%20Shot%202019-05-21%20at%2011.40.07%20PM.png)
 
-![Image of Search Page] (https://github.com/CamdynR/Cogs121/blob/master/Screenshots/Screen%20Shot%202019-05-21%20at%2011.41.00%20PM.png)
+![Image of Search Page](https://github.com/CamdynR/Cogs121/blob/master/Screenshots/Screen%20Shot%202019-05-21%20at%2011.41.00%20PM.png)
 
-![Image of Search Results] (https://github.com/CamdynR/Cogs121/blob/master/Screenshots/Screen%20Shot%202019-05-21%20at%2011.41.09%20PM.png)
+![Image of Search Results](https://github.com/CamdynR/Cogs121/blob/master/Screenshots/Screen%20Shot%202019-05-21%20at%2011.41.09%20PM.png)
 
-![Image of Frame] (https://github.com/CamdynR/Cogs121/blob/master/Screenshots/Screen%20Shot%202019-05-21%20at%2011.40.21%20PM.png)
+![Image of Frame](https://github.com/CamdynR/Cogs121/blob/master/Screenshots/Screen%20Shot%202019-05-21%20at%2011.40.21%20PM.png)
 
 
 
