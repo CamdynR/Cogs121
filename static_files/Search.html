@@ -20,7 +20,7 @@
             let query = $('#SearchBar').val();
             let searchURL = 'https://newsapi.org/v2/everything?' +
             'q=' + query +
-            '&apiKey=5f5292f795ff4921b8fe0f9384dd7435';
+            '&apiKey=2c893b7854af4714836668629978a06a';
             let req = new Request(searchURL);
             result = await fetch(req).then(response => response.json());
             setTimeout(function(){

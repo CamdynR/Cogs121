@@ -20,7 +20,7 @@
   function getCnnArticles() {
     let cnnurl = 'https://newsapi.org/v2/top-headlines?' +
           'sources=cnn&' +
-          'apiKey=5f5292f795ff4921b8fe0f9384dd7435';
+          'apiKey=2c893b7854af4714836668629978a06a';
           // 'language=en&' +
     let req = new Request(cnnurl);
     return fetch(req).then(response => response.json());
@@ -28,7 +28,7 @@
   function getFoxArticles() {
     let foxurl = 'https://newsapi.org/v2/top-headlines?' +
           'sources=fox-news&' +
-          'apiKey=5f5292f795ff4921b8fe0f9384dd7435';
+          'apiKey=2c893b7854af4714836668629978a06a';
           // 'language=en&' +
     let req = new Request(foxurl);
     return fetch(req).then(response => response.json());
@@ -37,7 +37,7 @@
     let bbcurl = 'https://newsapi.org/v2/top-headlines?' +
           'sources=bbc-news&' +
           // 'language=en&' +
-          'apiKey=5f5292f795ff4921b8fe0f9384dd7435';
+          'apiKey=2c893b7854af4714836668629978a06a';
     let req = new Request(bbcurl);
     return fetch(req).then(response => response.json());
   };
@@ -45,7 +45,7 @@
     let nyturl = 'https://newsapi.org/v2/top-headlines?' +
           'sources=the-new-york-times&' +
           // 'language=en&' +
-          'apiKey=5f5292f795ff4921b8fe0f9384dd7435';
+          'apiKey=2c893b7854af4714836668629978a06a';
     let req = new Request(nyturl);
     return fetch(req).then(response => response.json());
   };
@@ -53,7 +53,7 @@
     let breiturl = 'https://newsapi.org/v2/top-headlines?' +
           'sources=breitbart-news&' +
           // 'language=en&' +
-          'apiKey=5f5292f795ff4921b8fe0f9384dd7435';
+          'apiKey=2c893b7854af4714836668629978a06a';
     let req = new Request(breiturl);
     return fetch(req).then(response => response.json());
   };
@@ -61,7 +61,7 @@
     let bloomurl = 'https://newsapi.org/v2/top-headlines?' +
           'sources=bloomberg&' +
           // 'language=en&' +
-          'apiKey=5f5292f795ff4921b8fe0f9384dd7435';
+          'apiKey=2c893b7854af4714836668629978a06a';
     let req = new Request(bloomurl);
     return fetch(req).then(response => response.json());
   };
@@ -69,7 +69,7 @@
     let usaurl = 'https://newsapi.org/v2/top-headlines?' +
           'sources=usa-today&' +
           // 'language=en&' +
-          'apiKey=5f5292f795ff4921b8fe0f9384dd7435';
+          'apiKey=2c893b7854af4714836668629978a06a';
     let req = new Request(usaurl);
     return fetch(req).then(response => response.json());
   };
@@ -77,7 +77,7 @@
     let dailyMailurl = 'https://newsapi.org/v2/top-headlines?' +
           'sources=daily-mail&' +
           // 'language=en&' +
-          'apiKey=5f5292f795ff4921b8fe0f9384dd7435';
+          'apiKey=2c893b7854af4714836668629978a06a';
     let req = new Request(dailyMailurl);
     return fetch(req).then(response => response.json());
   };
@@ -85,7 +85,7 @@
     let msnbcurl = 'https://newsapi.org/v2/top-headlines?' +
           'sources=msnbc&' +
           // 'language=en&' +
-          'apiKey=5f5292f795ff4921b8fe0f9384dd7435';
+          'apiKey=2c893b7854af4714836668629978a06a';
     let req = new Request(msnbcurl);
     return fetch(req).then(response => response.json());
   };
@@ -426,7 +426,7 @@
             <p hidden id="textCenter1">This text should be hidden.</p>
 
             <a id="leftLink" onclick="getLeft('urlLeft1', 'textLeft1')">LEFT</a>
-            <a id="centerLink" onclick="getCenter('urlCenter1', 'textCenter1')">CENTER</a>
+            <!-- <a id="centerLink" onclick="getCenter('urlCenter1', 'textCenter1')">CENTER</a> -->
             <a id="rightLink" onclick="getRight('urlRight1', 'textRight1')">RIGHT</a>
         </li>
         <li id="savedTile2" class="tile">
@@ -445,7 +445,7 @@
             <p hidden id="textCenter2">This text should be hidden.</p>
 
             <a id="leftLink" onclick="getLeft('urlLeft2', 'textLeft2')">LEFT</a>
-            <a id="centerLink" onclick="getCenter('urlCenter2', 'textCenter2')">CENTER</a>
+            <!-- <a id="centerLink" onclick="getCenter('urlCenter2', 'textCenter2')">CENTER</a> -->
             <a id="rightLink" onclick="getRight('urlRight2', 'textRight2')">RIGHT</a>
         </li>
         <li id="savedTile3" class="tile">
@@ -464,7 +464,7 @@
             <p hidden id="textCenter3">This text should be hidden.</p>
 
             <a id="leftLink" onclick="getLeft('urlLeft3', 'textLeft3')">LEFT</a>
-            <a id="centerLink" onclick="getCenter('urlCenter3', 'textCenter3')">CENTER</a>
+            <!-- <a id="centerLink" onclick="getCenter('urlCenter3', 'textCenter3')">CENTER</a> -->
             <a id="rightLink" onclick="getRight('urlRight3', 'textRight3')">RIGHT</a>
         </li>
         <li id="savedTile4" class="tile">
@@ -483,7 +483,7 @@
             <p hidden id="textCenter4">This text should be hidden.</p>
 
             <a id="leftLink" onclick="getLeft('urlLeft4', 'textLeft4')">LEFT</a>
-            <a id="centerLink" onclick="getCenter('urlCenter4', 'textCenter4')">CENTER</a>
+            <!-- <a id="centerLink" onclick="getCenter('urlCenter4', 'textCenter4')">CENTER</a> -->
             <a id="rightLink" onclick="getRight('urlRight4', 'textRight4')">RIGHT</a>
             
         </li>
@@ -507,7 +507,7 @@
             <p hidden id="textCenter5">This text should be hidden.</p>
 
             <a id="leftLink" onclick="getLeft('urlLeft5', 'textLeft5')">LEFT</a>
-            <a id="centerLink" onclick="getCenter('urlCenter5', 'textCenter5')">CENTER</a>
+            <!-- <a id="centerLink" onclick="getCenter('urlCenter5', 'textCenter5')">CENTER</a> -->
             <a id="rightLink" onclick="getRight('urlRight5', 'textRight5')">RIGHT</a>
         </li>
     </ul>
