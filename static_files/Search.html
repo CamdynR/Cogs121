@@ -15,21 +15,27 @@
 
 <script type="text/javascript">
     $(document).ready(() => {
+        mediaBias = {'cnn': 'left', 'fox-news': 'right', 'bbc-news': 'neutral', 'the-new-york-times': 'left', 'breitbart-news': 'right', 'bloomberg': 'neutral', 'usa-today': 'neutral', 'daily-mail': 'right', 'msnbc': 'left', 'buzzfeed': 'left', 'cbs-news': 'neutral', 'google-news': 'neutral', 'the-american-conservative': 'right', 'the-hill': 'right', 'the-huffington-post': 'left', 'the-washington-post': 'left','the-economist': 'right', 'the-washington-times': 'right', 'time': 'neutral', 'wired': 'left', 'techcrunch': 'left', 'the-jerusalem-post': 'neutral', 'abc-news': 'left', 'reuters': 'neutral', 'mashable': 'left', 'associated-press': 'neutral'}
         $('#tileList').hide();
         $('#SearchButton').click(async function getResults() {
             let query = $('#SearchBar').val();
-            let searchURL = 'https://newsapi.org/v2/everything?' +
+            let searchURL = 'https://newsapi.org/v2/top-headlines?' +
             'q=' + query +
             '&apiKey=2c893b7854af4714836668629978a06a';
             let req = new Request(searchURL);
             result = await fetch(req).then(response => response.json());
             setTimeout(function(){
                 console.log(result);
-                for (i=0; i < 5; i++) {
-                    let tileID = 'searchResult' + String(i);
-                    let headID = 'resultHeadline' + String(i);
-                    let descID = 'resultDesc' + String(i);
-                    let urlID = 'resultURL' + String(i); 
+                let goodArticles = 0
+                for (i=0; i < result.articles.length; i++) {
+                    if (goodArticles > 4) {
+                        break;
+                    }
+                    let tileID = 'searchResult' + String(goodArticles);
+                    let headID = 'resultHeadline' + String(goodArticles);
+                    let descID = 'resultDesc' + String(goodArticles);
+                    let urlID = 'resultURL' + String(goodArticles);
+                    let source = result.articles[i].source.id; 
                     if (i >= result.articles.length) {
                         if (i == 0) {
                             $('#'+headID).html('No Results.');
@@ -40,12 +46,36 @@
                         }
                     }
                     else { 
-                        if (result.articles[i].description && result.articles[i].content && result.articles[i].url) {
+                        if (result.articles[i].description&&result.articles[i].url&&source) {
+                            console.log(result.articles[i]);
                             $('#'+headID).html(result.articles[i].title);
                             $('#'+descID).html(result.articles[i].description);
                             $('#'+urlID).attr('href', result.articles[i].url);
+                            if (mediaBias[source]) {
+                                if (mediaBias[source] == 'left') {
+                                    $('#sourceSymbol' + String(goodArticles)).attr('src', 'Images/DemocraticLogo.svg.png');
+                                }
+                                else if (mediaBias[source] == 'right') {
+                                    $('#sourceSymbol' + String(goodArticles)).attr('src', 'Images/Republicanlogo.svg.png');
+                                }
+                                else {
+                                    $('#sourceSymbol' + String(goodArticles)).attr('src', 'Images/neutralSymbol.jpg');
+                                }
+                            }
+                            else {
+                                $('#sourceSymbol' + String(goodArticles)).attr('src', 'Images/question-mark.jpg');
+                            }
+                            goodArticles++;
                             
                         }
+                    }
+                }
+                for (i=goodArticles; i < 5; i++) {
+                    if (i == 0 ) {
+                        $('#searchResult' + String(i)).html('No Results.');
+                    }
+                    else {
+                        $('#searchResult' + String(i)).hide();
                     }
                 }
                 $('#tileList').show();
@@ -102,6 +132,7 @@
                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 
             <a id ="resultURL0" href=""><button>Link To Article</button></a>
+            <img id='sourceSymbol0' src=''></img>
 
         </li>
         <li id="searchResult1" class="tile">
@@ -111,6 +142,7 @@
                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 
             <a id ="resultURL1" href=""><button>Link To Article</button></a>
+            <img id='sourceSymbol1' src=''></img>
         </li>
         <li id="searchResult2" class="tile">
             <b><div id="resultHeadline2"><p class="savedHeadline">Headline 5</p></div></b>
@@ -119,6 +151,7 @@
                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 
             <a id ="resultURL2" href=""><button>Link To Article</button></a>
+            <img id='sourceSymbol2' src=''></img>
         </li>
         <li id="searchResult3" class="tile">
             <b><div id="resultHeadline3"><p class="savedHeadline">Headline 5</p></div></b>
@@ -127,6 +160,7 @@
                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 
             <a id ="resultURL3" href=""><button>Link To Article</button></a>
+            <img id='sourceSymbol3' src=''></img>
         </li>
         <li id="searchResult4" class="tile">
             <b><div id="resultHeadline4"><p class="savedHeadline">Headline 5</p></div></b>
@@ -135,6 +169,7 @@
                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 
             <a id ="resultURL4" href=""><button>Link To Article</button></a>
+            <img id='sourceSymbol4' src=''></img>
 
         </li>
     </ul>
