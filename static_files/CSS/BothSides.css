@@ -138,6 +138,12 @@ input[type="checkbox"] {
     z-index: 7;
 }
 
+#pic0, #pic1, #pic2, #pic3, #pic4 {
+    height: 100px;
+    width: 100px;
+    float: right;
+}
+
 /* iframe window pop-up CSS */
 #iframe {
     width: 90%;

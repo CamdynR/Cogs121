@@ -187,6 +187,9 @@
         for (i=0; i < 5; i++) {
             let headID = '#Headline' + String(i+1);
             let descID = '#desc' + String(i+1);
+            let picID = '#pic' + String(i);
+            let rightID = '#rightLink' + String(i);
+            let leftID = '#leftLink' + String(i);
 
             let urlLeft = '#urlLeft' + String(i+1);
             let urlRight = '#urlRight' + String(i+1);
@@ -196,8 +199,13 @@
 
             // console.log(headID, descID);
             $(headID).html(displayArticles[i].title);
-            $(descID).html(displayArticles[i].description);
-
+            $(rightID).attr('href',iframeArticles[k].url)
+            $(leftID).attr('href',iframeArticles[i*2].url)
+            // $(descID).html(displayArticles[i].description);
+            $(descID).html('');
+            if (displayArticles[i].urlToImage) {
+                $(picID).attr('src', displayArticles[i].urlToImage);
+            }
             
             $(urlLeft).html(iframeArticles[i*2].url);
             $(urlRight).html(iframeArticles[k].url);
@@ -210,8 +218,11 @@
     else {
         let k = 1;
         for (i=0; i < displayArticles.length; i++) {
-            headID = '#Headline' + String(i+1);
-            descID = '#desc' + String(i+1);
+            let headID = '#Headline' + String(i+1);
+            let descID = '#desc' + String(i+1);
+            let picID = '#pic' + String(i);
+            let rightID = '#rightLink' + String(i);
+            let leftID = '#leftLink' + String(i);
 
             let urlLeft = '#urlLeft' + String(i+1);
             let urlRight = '#urlRight' + String(i+1);
@@ -219,13 +230,24 @@
             $(headID).html(displayArticles[i].title);
             $(descID).html(displayArticles[i].description);
 
+            $(rightID).attr('href',iframeArticles[k].url)
+            $(leftID).attr('href',iframeArticles[i*2].url)
+            // $(descID).html(displayArticles[i].description);
+            $(descID).html('');
+            if (displayArticles[i].urlToImage) {
+                $(picID).attr('src', displayArticles[i].urlToImage);
+            }
 
-            $(urlLeft).html(iframeArticles[i*2].url);
-            $(urlRight).html(iframeArticles[k].url);
+            // $(urlLeft).html(iframeArticles[i*2].url);
+            // $(urlRight).html(iframeArticles[k].url);
 
-            $(textLeft).html(iframeArticles[i*2].content);
-            $(textRight).html(iframeArticles[k].content);
+            // $(textLeft).html(iframeArticles[i*2].content);
+            // $(textRight).html(iframeArticles[k].content);
             k = k + 2;
+        }
+        for (i = displayArticles.length; i < 5; i++) {
+            let toHide = '#savedTile' + String(i+1);
+            $(toHide).hide();
         }
     }
     $('#tileList').show();
@@ -416,6 +438,8 @@
             </p></b>
             <p class="content" id="desc1">Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+
+            <img src="Images/noImageAvailable.png" id='pic0'></img>
                
             <p hidden id="urlLeft1">This url should be hidden.</p>
             <p hidden id="urlRight1">This url should be hidden.</p>
@@ -425,9 +449,12 @@
             <p hidden id="textRight1">This text should be hidden.</p>
             <p hidden id="textCenter1">This text should be hidden.</p>
 
-            <a id="leftLink" onclick="getLeft('urlLeft1', 'textLeft1')">LEFT</a>
+            <a id="leftLink0" href='' class='btn'>LEFT</a>
+            <a id="rightLink0" href='' class='btn'>RIGHT</a>
+
+            <!-- <a id="leftLink" onclick="getLeft('urlLeft1', 'textLeft1')">LEFT</a> -->
             <!-- <a id="centerLink" onclick="getCenter('urlCenter1', 'textCenter1')">CENTER</a> -->
-            <a id="rightLink" onclick="getRight('urlRight1', 'textRight1')">RIGHT</a>
+            <!-- <a id="rightLink" onclick="getRight('urlRight1', 'textRight1')">RIGHT</a> -->
         </li>
         <li id="savedTile2" class="tile">
             <!-- <img src="Images/star.png" class="tileStar" id="secondStar" onclick="starClick(this)"></img> -->
@@ -435,6 +462,8 @@
 
             <p class="content" id="desc2">Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+
+            <img src="Images/noImageAvailable.png" id='pic1'></img>
 
             <p hidden id="urlLeft2">This url should be hidden.</p>
             <p hidden id="urlRight2">This url should be hidden.</p>
@@ -444,9 +473,11 @@
             <p hidden id="textRight2">This text should be hidden.</p>
             <p hidden id="textCenter2">This text should be hidden.</p>
 
-            <a id="leftLink" onclick="getLeft('urlLeft2', 'textLeft2')">LEFT</a>
+            <a id="leftLink1" href=''>LEFT</a>
+            <a id="rightLink1" href=''>RIGHT</a>
+            <!-- <a id="leftLink" onclick="getLeft('urlLeft2', 'textLeft2')">LEFT</a> -->
             <!-- <a id="centerLink" onclick="getCenter('urlCenter2', 'textCenter2')">CENTER</a> -->
-            <a id="rightLink" onclick="getRight('urlRight2', 'textRight2')">RIGHT</a>
+            <!-- <a id="rightLink" onclick="getRight('urlRight2', 'textRight2')">RIGHT</a> -->
         </li>
         <li id="savedTile3" class="tile">
             <!-- <img src="Images/hollowStar2.png" class="tileStar" id="thirdStar" onclick="starClick(this)"></img> -->
@@ -454,6 +485,8 @@
 
             <p class="content" id="desc3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+
+            <img src="Images/noImageAvailable.png" id='pic2'></img>
             
             <p hidden id="urlLeft3">This url should be hidden.</p>
             <p hidden id="urlRight3">This url should be hidden.</p>
@@ -463,9 +496,11 @@
             <p hidden id="textRight3">This text should be hidden.</p>
             <p hidden id="textCenter3">This text should be hidden.</p>
 
-            <a id="leftLink" onclick="getLeft('urlLeft3', 'textLeft3')">LEFT</a>
+            <a id="leftLink2" href=''>LEFT</a>
+            <a id="rightLink2" href=''>RIGHT</a>
+            <!-- <a id="leftLink" onclick="getLeft('urlLeft3', 'textLeft3')">LEFT</a> -->
             <!-- <a id="centerLink" onclick="getCenter('urlCenter3', 'textCenter3')">CENTER</a> -->
-            <a id="rightLink" onclick="getRight('urlRight3', 'textRight3')">RIGHT</a>
+            <!-- <a id="rightLink" onclick="getRight('urlRight3', 'textRight3')">RIGHT</a> -->
         </li>
         <li id="savedTile4" class="tile">
             <!-- <img src="Images/star.png" class="tileStar" id="fourthStar" onclick="starClick(this)"></img> -->
@@ -473,6 +508,8 @@
 
             <p class="content" id="desc4">Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+
+            <img src="Images/noImageAvailable.png" id='pic3'></img>
 
             <p hidden id="urlLeft4">This url should be hidden.</p>
             <p hidden id="urlRight4">This url should be hidden.</p>
@@ -482,9 +519,12 @@
             <p hidden id="textRight4">This text should be hidden.</p>
             <p hidden id="textCenter4">This text should be hidden.</p>
 
-            <a id="leftLink" onclick="getLeft('urlLeft4', 'textLeft4')">LEFT</a>
+            <a id="leftLink3" href=''>LEFT</a>
+            <a id="rightLink3" href=''>RIGHT</a>
+
+            <!-- <a id="leftLink" onclick="getLeft('urlLeft4', 'textLeft4')">LEFT</a> -->
             <!-- <a id="centerLink" onclick="getCenter('urlCenter4', 'textCenter4')">CENTER</a> -->
-            <a id="rightLink" onclick="getRight('urlRight4', 'textRight4')">RIGHT</a>
+            <!-- <a id="rightLink" onclick="getRight('urlRight4', 'textRight4')">RIGHT</a> -->
             
         </li>
         <li id="savedTile5" class="tile">
@@ -497,6 +537,8 @@
                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+
+            <img src="Images/noImageAvailable.png" id='pic4'></img>
             
             <p hidden id="urlLeft5">This url should be hidden.</p>
             <p hidden id="urlRight5">This url should be hidden.</p>
@@ -506,9 +548,12 @@
             <p hidden id="textRight5">This text should be hidden.</p>
             <p hidden id="textCenter5">This text should be hidden.</p>
 
-            <a id="leftLink" onclick="getLeft('urlLeft5', 'textLeft5')">LEFT</a>
+            <a id="leftLink4" href=''>LEFT</a>
+            <a id="rightLink4" href=''>RIGHT</a>
+
+            <!-- <a id="leftLink" onclick="getLeft('urlLeft5', 'textLeft5')">LEFT</a> -->
             <!-- <a id="centerLink" onclick="getCenter('urlCenter5', 'textCenter5')">CENTER</a> -->
-            <a id="rightLink" onclick="getRight('urlRight5', 'textRight5')">RIGHT</a>
+            <!-- <a id="rightLink" onclick="getRight('urlRight5', 'textRight5')">RIGHT</a> -->
         </li>
     </ul>
     </center>
