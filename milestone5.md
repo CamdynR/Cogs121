@@ -9,7 +9,7 @@ Our target user population are people who are interested in staying up to date w
 
 # UI Improvements Explanation 
 
-Our latest UI improved the home page so that tiles include pictures associated with the article and the article's title. This replaced our earlier versions where a description was also displayed. Additionally, the search page is now color coded to indicate the results as either left or right. 
+Our latest UI improved the home page so that tiles include pictures associated with the article and the article's title. This replaced our earlier versions where a description was also displayed. Once users click on an aritcle, they are lead to the article source that is opened in a new tab. Additionally, the search page now indicates whether articles or left, right, neutral, or unknown based by displaying symbols (democratic logo, republican logo, equal sign, and question mark respeectively).
 
 # Data Visualization Screenshots 
 
