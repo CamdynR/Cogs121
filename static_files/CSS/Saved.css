@@ -110,6 +110,7 @@ body {
 }
 
 .tileSubTxt {
+    margin-top: 10px;
     margin-left: 19.2px;
     padding-right: 19.2px;
     font-size: 1.2rem;
@@ -122,10 +123,36 @@ body {
 #resultHeadline0, #resultHeadline1, #resultHeadline2, #resultHeadline3, #resultHeadline4 {
     margin-left: 25px;
     margin-right: 38px;
-    padding-top: 1px;  
+    margin-bottom: 10px;
+    padding-top: 10px;  
+    padding-bottom: 10px;
     font-size: 1.2rem;
+}
+
+#resultDesc0, #resultDesc1, #resultDesc2, #resultDesc3, #resultDesc4 {
+    margin-bottom: 7px;
+    padding-bottom: 30px;
 }
 
 #leftLink {
     margin-left: 5px;
+}
+
+#sourceSymbol0, #sourceSymbol1, #sourceSymbol2, #sourceSymbol3, #sourceSymbol4 {
+    width: 70px;
+    margin-top: -28px;
+    margin-left: 40px;
+    float: left;
+}
+
+#resultURL0, #resultURL1, #resultURL2, #resultURL3, #resultURL4 {
+    background-color: rgb(50, 50, 50);
+    border-radius: 5px;
+    padding: 5px 10px 5px 10px;
+    border: none;
+    width: 150px;
+    height: 30px;
+    margin-left: 30px;
+    color: white;
+    font-size: 1.1rem;
 }
