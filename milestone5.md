@@ -9,7 +9,7 @@ Our target user population are people who are interested in staying up to date w
 
 # UI Improvements Explanation 
 
-
+Our latest UI improved the home page so that tiles include pictures associated with the article and the article's title. This replaced our earlier versions where a description was also displayed. Additionally, the search page is now color coded to indicate the results as either left or right. 
 
 # Data Visualization Screenshots 
 
