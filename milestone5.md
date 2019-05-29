@@ -9,7 +9,7 @@ Our target user population are people who are interested in staying up to date w
 
 # UI Improvements Explanation 
 
-Our latest UI improved the home page so that tiles include pictures associated with the article and the article's title. This replaced our earlier versions where a description was also displayed. Additionally, the search page now has images associated with the political party the article is biased towards. If the source's bias is unknown, a question mark image appears instead. 
+Our latest UI improved the home page so that tiles include pictures associated with the article and the article's title. This replaced our earlier versions where a description was also displayed. Users are also brought to a new tab when they click on an article. Additionally, the search page now has images associated with the political party the article is biased towards. If the source's bias is unknown, a question mark image appears instead. 
 
 # Data Visualization Screenshots 
 
