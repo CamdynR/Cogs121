@@ -3,8 +3,14 @@
 Our target user population are people who are interested in staying up to date with current politics but want to have a more holistic view of the topics / understand both sides to each issue. These people usually do not have a favorite news source or place to get their relevant news from. They also want to have a way to quickly digest any current happenings without being bombarded with too much extra information. With Both Sides, the user is able to recieve five different news stories periodically and have links to both sides of the issue within a click. They can also search topics they may have heard from word of mouth and want to read more about while identifying which side of the topic they are engaging with. Users can quickly scroll through news stories with BothSides and directly read news from the sources themselves. After reading their chosen articles, they feel satisfied and more up to date with the current political happenings so they can be more engaged citizens.  
 
 # Screenshots of Latest UI
+![Image of Home Page](https://github.com/CamdynR/Cogs121/blob/master/Screenshots/Screen%20Shot%202019-05-29%20at%201.04.37%20AM.png)
 
 
+![Image of Search Page1](https://github.com/CamdynR/Cogs121/blob/master/Screenshots/Screen%20Shot%202019-05-29%20at%201.04.53%20AM.png)
+
+
+
+![Image of Search Page2](https://github.com/CamdynR/Cogs121/blob/master/Screenshots/Screen%20Shot%202019-05-29%20at%201.05.06%20AM.png)
 
 
 # UI Improvements Explanation 
@@ -13,6 +19,7 @@ Our latest UI improved the home page so that tiles include pictures associated w
 
 # Data Visualization Screenshots 
 
+![Image of Home Page](https://github.com/CamdynR/Cogs121/blob/master/Screenshots/Screen%20Shot%202019-05-29%20at%201.04.37%20AM.png)
 
 
 # How Data was Implemented / Future Ideas 
