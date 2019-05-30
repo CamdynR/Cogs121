@@ -1,0 +1,28 @@
+{
+  "name": "cogs121",
+  "version": "1.0.0",
+  "description": "BothSides gives you both sides of every news headline",
+  "main": "\u001b[D\u001b[D\u001b[D\u001bserver.js)",
+  "dependencies": {
+    "algoliasearch": "^3.33.0",
+    "dotenv": "^8.0.0",
+    "express": "^4.16.4",
+    "firebase": "^6.0.2",
+    "newsapi": "^2.4.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CamdynR/Cogs121.git"
+  },
+  "author": "Camdyn Rasque, Shreya Sheel, Chris Wynne, Alan Chen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CamdynR/Cogs121/issues"
+  },
+  "homepage": "https://github.com/CamdynR/Cogs121#readme"
+}
