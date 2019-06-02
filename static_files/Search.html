@@ -12,67 +12,97 @@
 
     </head>
 <script src="Javascript/jquery-3.3.1.min.js"></script>
-
 <script type="text/javascript">
     $(document).ready(() => {
-        mediaBias = {'cnn': 'left', 'fox-news': 'right', 'bbc-news': 'neutral', 'the-new-york-times': 'left', 'breitbart-news': 'right', 'bloomberg': 'neutral', 'usa-today': 'neutral', 'daily-mail': 'right', 'msnbc': 'left', 'buzzfeed': 'left', 'cbs-news': 'neutral', 'google-news': 'neutral', 'the-american-conservative': 'right', 'the-hill': 'right', 'the-huffington-post': 'left', 'the-washington-post': 'left','the-economist': 'right', 'the-washington-times': 'right', 'time': 'neutral', 'wired': 'left', 'techcrunch': 'left', 'the-jerusalem-post': 'neutral', 'abc-news': 'left', 'reuters': 'neutral', 'mashable': 'left', 'associated-press': 'neutral', 'the-wall-street-journal': 'right'}
+        //Hard coded media bias ratings for major sources, can be updated whenever
+        mediaBias = {'cnn': 'left', 
+                     'fox-news': 'right', 
+                     'bbc-news': 'neutral', 
+                     'the-new-york-times': 'left',
+                     'breitbart-news': 'right', 
+                     'bloomberg': 'neutral',
+                     'usa-today': 'neutral', 
+                     'daily-mail': 'right', 
+                     'msnbc': 'left', 
+                     'buzzfeed': 'left',
+                     'cbs-news': 'neutral', 
+                     'google-news': 'neutral',
+                     'the-american-conservative': 'right', 
+                     'the-hill': 'right',
+                     'the-huffington-post': 'left', 
+                     'the-washington-post': 'left',
+                     'the-economist': 'right', 
+                     'the-washington-times': 'right', 
+                     'time': 'neutral', 
+                     'wired': 'left', 
+                     'techcrunch': 'left', 
+                     'the-jerusalem-post': 'neutral', 
+                     'abc-news': 'left', 
+                     'reuters': 'neutral', 
+                     'mashable': 'left', 
+                     'associated-press': 'neutral', 
+                     'the-wall-street-journal': 'right'};
+
+        //hide html before search is made
         $('#tileList').hide();
+
+        //search button: makes a request to the api using the query term
         $('#SearchButton').click(async function getResults() {
             let query = $('#SearchBar').val();
             let searchURL = 'https://newsapi.org/v2/top-headlines?' +
             'q=' + query +
             '&apiKey=2c893b7854af4714836668629978a06a';
             let req = new Request(searchURL);
+            //json of the articles that match the search term
             result = await fetch(req).then(response => response.json());
+
+            //timeout for the request to go through and retrieve the articles
+            //function that parses the search results and only displays articles that have a url and description, along with the bias picture
             setTimeout(function(){
-                console.log(result);
-                let goodArticles = 0
+                let goodArticles = 0 
                 for (i=0; i < result.articles.length; i++) {
+                    //only display the first 5 good results
                     if (goodArticles > 4) {
                         break;
                     }
-                    let tileID = 'searchResult' + String(goodArticles);
-                    let headID = 'resultHeadline' + String(goodArticles);
-                    let descID = 'resultDesc' + String(goodArticles);
-                    let urlID = 'resultURL' + String(goodArticles);
+                    let tileID = '#searchResult' + String(goodArticles);
+                    let headID = '#resultHeadline' + String(goodArticles);
+                    let descID = '#resultDesc' + String(goodArticles);
+                    let urlID = '#resultURL' + String(goodArticles);
                     let source = result.articles[i].source.id; 
-                    if (i >= result.articles.length) {
-                        if (i == 0) {
-                            $('#'+headID).html('No Results.');
-                            $('#'+descID).html('Make sure to type the keyword exactly right!');
-                        }
-                        else {
-                            $('#'+tileID).hide();
-                        }
-                    }
-                    else { 
-                        if (result.articles[i].description&&result.articles[i].url&&source) {
-                            console.log(result.articles[i]);
-                            $('#'+headID).html(result.articles[i].title);
-                            $('#'+descID).html(result.articles[i].description);
-                            $('#'+urlID).attr('href', result.articles[i].url);
-                            if (mediaBias[source]) {
-                                if (mediaBias[source] == 'left') {
-                                    $('#sourceSymbol' + String(goodArticles)).attr('src', 'Images/DemocraticLogo.svg.png');
-                                }
-                                else if (mediaBias[source] == 'right') {
-                                    $('#sourceSymbol' + String(goodArticles)).attr('src', 'Images/Republicanlogo.svg.png');
-                                }
-                                else {
-                                    $('#sourceSymbol' + String(goodArticles)).attr('src', 'Images/neutralSymbol.png');
-                                }
+
+                    if (result.articles[i].description&&result.articles[i].url&&source) {
+                        $(headID).html(result.articles[i].title);
+                        $(descID).html(result.articles[i].description);
+                        $(urlID).attr('href', result.articles[i].url);
+                        if (mediaBias[source]) {
+                            if (mediaBias[source] == 'left') {
+                                $('#sourceSymbol' + String(goodArticles)).attr('src', 'Images/DemocraticLogo.svg.png');
+                            }
+                            else if (mediaBias[source] == 'right') {
+                                $('#sourceSymbol' + String(goodArticles)).attr('src', 'Images/Republicanlogo.svg.png');
                             }
                             else {
-                                $('#sourceSymbol' + String(goodArticles)).attr('src', 'Images/question-mark.png');
+                                $('#sourceSymbol' + String(goodArticles)).attr('src', 'Images/neutralSymbol.png');
                             }
-                            goodArticles++;
-                            
                         }
+                        else {
+                            $('#sourceSymbol' + String(goodArticles)).attr('src', 'Images/question-mark.png');
+                        }
+                        $(tileID).show();
+                        $(descID).show();
+                        $(urlID).show();
+                        $('#sourceSymbol' + String(goodArticles)).show();
+                        goodArticles++;
                     }
                 }
                 for (i=goodArticles; i < 5; i++) {
-                    if (i == 0 ) {
-                        $('#searchResult' + String(i)).html('No Results.');
+                    if (i == 0) {
+                        console.log('entered');
+                        $('#resultHeadline' + String(i)).html('No Results.');
+                        $('#resultDesc' + String(i)).html('');
+                        $('#resultURL' + String(i)).hide();
+                        $('#sourceSymbol' + String(i)).hide();
                     }
                     else {
                         $('#searchResult' + String(i)).hide();
@@ -82,7 +112,6 @@
             }, 200);
         });
     });
-
     $(window).scroll(function() {
         if ($(this).scrollTop() == 0) {
             $('#banner').css({
@@ -92,7 +121,6 @@
             $('#moreButton').css({'display': 'none'});
         }
         else {
-            /*filter: drop-shadow(0px 4px 4px #3b3b3b);*/
             $('#banner').css({
                     'box-shadow': '0px 6px 8px #3b3b3b',
                     '-moz-box-shadow' : '0px 6px 8px #3b3b3b',
@@ -127,47 +155,37 @@
     <ul id="tileList">
         <li id="searchResult0" class="tile">
             <b><div id="resultHeadline0"><p class="savedHeadline">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p></div></b>
-
             <p class="tileSubTxt" id='resultDesc0'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-
             <a id ="resultURL0" href="" target="_blank">Go To Article</a>
             <img id='sourceSymbol0' src=''></img>
 
         </li>
         <li id="searchResult1" class="tile">
             <b><div id="resultHeadline1"><p class="savedHeadline">Headline 4</p></div></b>
-
             <p class="tileSubTxt" id='resultDesc1'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-
             <a id ="resultURL1" href="" target="_blank">Go To Article</a>
             <img id='sourceSymbol1' src=''></img>
         </li>
         <li id="searchResult2" class="tile">
             <b><div id="resultHeadline2"><p class="savedHeadline">Headline 5</p></div></b>
-
             <p class="tileSubTxt" id='resultDesc2'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-
             <a id ="resultURL2" href="" target="_blank">Go To Article</a>
             <img id='sourceSymbol2' src=''></img>
         </li>
         <li id="searchResult3" class="tile">
             <b><div id="resultHeadline3"><p class="savedHeadline">Headline 5</p></div></b>
-
             <p class="tileSubTxt" id='resultDesc3'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-
             <a id ="resultURL3" href="" target="_blank">Go To Article</a>
             <img id='sourceSymbol3' src=''></img>
         </li>
         <li id="searchResult4" class="tile">
             <b><div id="resultHeadline4"><p class="savedHeadline">Headline 5</p></div></b>
-
             <p class="tileSubTxt" id='resultDesc4'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-
             <a id ="resultURL4" href="" target="_blank">Go To Article</a>
             <img id='sourceSymbol4' src=''></img>
 

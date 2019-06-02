@@ -3,6 +3,8 @@ const app = express();
 
 app.use(express.static('static_files'));
 
+let secret = require('./secret.js');
+
 const authorDatabase = {
   'Chris': {stance: 'left', photo: 'Images/chris.jpg'},
   'Alan': {stance: 'mid',   photo: 'Images/alan.jpg'},
@@ -20,6 +22,13 @@ app.get('/authors/:authorid', (req, res) => {
   } else {
     res.send({}); // failed, so return an empty object instead of undefined
   }
+});
+
+app.get('/apiKeys', (req, res) => {
+  // db.all() fetches all results from an SQL query into the 'rows' variable:
+  info = {'firebase': secret.firebaseConfig, 'newsapi': secret.shreyaNewsApiKey};
+  console.log(info);
+  res.send(info);
 });
 
 app.listen(3000, () => {

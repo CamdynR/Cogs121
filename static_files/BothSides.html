@@ -1,13 +1,10 @@
-<!-- Skeleton HomePage -->
-
 <!DOCTYPE html>
 <html>
 <script src="Javascript/jquery-3.3.1.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/5.11.0/firebase.js"></script>
 <script>
-  // Initialize Firebase
+  //initializing firebase database
   var config = {
-    // Paste Data HERE:
     apiKey: "AIzaSyBdMvbpg5HHZmCOWkoI45DF6dpEuQXLxxU",
     authDomain: "bothsides-70e83.firebaseapp.com",
     databaseURL: "https://bothsides-70e83.firebaseio.com",
@@ -16,12 +13,13 @@
     messagingSenderId: "841983833378"
   };
   firebase.initializeApp(config);
-  const database = firebase.database();
+  database = firebase.database();
+
+  //fetching functions for our designated news sources, returns a json object with 10 articles from specified source
   function getCnnArticles() {
     let cnnurl = 'https://newsapi.org/v2/top-headlines?' +
           'sources=cnn&' +
           'apiKey=2c893b7854af4714836668629978a06a';
-          // 'language=en&' +
     let req = new Request(cnnurl);
     return fetch(req).then(response => response.json());
   };
@@ -29,16 +27,7 @@
     let foxurl = 'https://newsapi.org/v2/top-headlines?' +
           'sources=fox-news&' +
           'apiKey=2c893b7854af4714836668629978a06a';
-          // 'language=en&' +
     let req = new Request(foxurl);
-    return fetch(req).then(response => response.json());
-  };
-  function getBbcArticles() {
-    let bbcurl = 'https://newsapi.org/v2/top-headlines?' +
-          'sources=bbc-news&' +
-          // 'language=en&' +
-          'apiKey=2c893b7854af4714836668629978a06a';
-    let req = new Request(bbcurl);
     return fetch(req).then(response => response.json());
   };
   function getNYTimesArticles() {
@@ -57,22 +46,6 @@
     let req = new Request(breiturl);
     return fetch(req).then(response => response.json());
   };
-  function getBloombergArticles() {
-    let bloomurl = 'https://newsapi.org/v2/top-headlines?' +
-          'sources=bloomberg&' +
-          // 'language=en&' +
-          'apiKey=2c893b7854af4714836668629978a06a';
-    let req = new Request(bloomurl);
-    return fetch(req).then(response => response.json());
-  };
-  function getUSATodayArticles() {
-    let usaurl = 'https://newsapi.org/v2/top-headlines?' +
-          'sources=usa-today&' +
-          // 'language=en&' +
-          'apiKey=2c893b7854af4714836668629978a06a';
-    let req = new Request(usaurl);
-    return fetch(req).then(response => response.json());
-  };
   function getDailyMailArticles() {
     let dailyMailurl = 'https://newsapi.org/v2/top-headlines?' +
           'sources=daily-mail&' +
@@ -89,8 +62,13 @@
     let req = new Request(msnbcurl);
     return fetch(req).then(response => response.json());
   };
+
+  //removes unimportant words from title string that is passed in, returns the cleaned string
   function cleanArticleTitle(title) {
-    const toCut = ['and', 'in', 'on', 'from', 'to', 'a', 'an', 'the', 'he', 'she', 'we', 'this', 'that', 'with', 'will', 'it', 'be', 'can', 'but', 'is', 'was', 'what', 'for', 'of', 'at', 'not', 'they', 'them', 'say'];
+    const toCut = ['and', 'in', 'on', 'from', 'to', 'a', 'an', 'the',
+                   'he', 'she', 'we', 'this', 'that', 'with', 'will', 
+                   'it', 'be', 'can', 'but', 'is', 'was', 'what', 'for', 
+                   'of', 'at', 'not', 'they', 'them', 'say'];
     let splitTitle = title.split(' ');
     let newTitleArr = [];
     for (i=0; i < splitTitle.length; i++) {
@@ -100,88 +78,72 @@
     }
     return newTitleArr.join(' ');
   };
+
+  //async function that calls the fetch functions and populates the firebase with the jsonified article objects
   (async function(){
     cnnArticles = await getCnnArticles();
     foxArticles = await getFoxArticles();
-    bbcArticles = await getBbcArticles();
     nytArticles = await getNYTimesArticles();
     breitbartArticles = await getBreitbartArticles();
-    bloombergArticles = await getBloombergArticles();
-    usatodayArticles = await getUSATodayArticles();
     dailymailArticles = await getDailyMailArticles();
     msnbcArticles = await getMsnbcArticles();
+
     leftArticles = [cnnArticles, nytArticles, msnbcArticles];
     rightArticles = [foxArticles, breitbartArticles, dailymailArticles];
-    midArticles = [bbcArticles, bloombergArticles, usatodayArticles];
+
     database.ref('history/left').set(leftArticles);
     database.ref('history/right').set(rightArticles);
-    database.ref('history/mid').set(midArticles);
   })();
-  setTimeout(function(){ 
-    // console.log(cnnArticles.articles);
-    // console.log(foxArticles.articles);
-    // console.log(nytArticles.articles);
-    // console.log(breitbartArticles.articles);
-    // console.log(bbcArticles.articles);
-    let displayArticles = [];
+
+  //article pairing function: takes all articles from the fetch functions and compares all titles from the left side to all titles
+  //on the right side, returns all the articles that meet the similarity requirements.
+  //timeout is so that the async function can fetch the articles in time
+  setTimeout(function(){
+
+    let displayArticles = []; //lists of articles to populate 
     let iframeArticles = [];
-    let isSim = false;
+    //similarity boolean so that each article only pairs with one other article, breaks out of the loop and switches to next left article.
+    let isSim = false; 
+    const threshold = .12; //threshold for similarity
+
+    //loops through all of the left articles and compares title from each left article to each right article.
+    //left source loop
     for (curLeftSource = 0; curLeftSource < leftArticles.length; curLeftSource++) {
+        //left article loop within source
         for (curLeftArticle = 0; curLeftArticle < leftArticles[curLeftSource].articles.length; curLeftArticle++) {
+            //right source loop
             for (curRightSource = 0; curRightSource < rightArticles.length; curRightSource++) {
+                //right article loop within source
                 for (curRightArticle = 0; curRightArticle < rightArticles[curRightSource].articles.length; curRightArticle++) {
+                    //extract title and convert to lower case for consistency
                     let titleA = cleanArticleTitle(leftArticles[curLeftSource].articles[curLeftArticle].title.toLowerCase());
                     let titleB = cleanArticleTitle(rightArticles[curRightSource].articles[curRightArticle].title.toLowerCase());
                     let sim = findSimilarity(titleA, titleB);
-                    if (sim > .12) {
-                        //console.log(sim, titleA, titleB);
+                    //similarity threshold 
+                    if (sim > threshold) {
                         displayArticle = leftArticles[curLeftSource].articles[curLeftArticle]
                         
                         //iFrame Usage
                         iframeLeft = leftArticles[curLeftSource].articles[curLeftArticle]
                         iframeRight = rightArticles[curRightSource].articles[curRightArticle]
 
+                        //populating article lists
                         if (displayArticle.content && displayArticle.description) {
                             displayArticles.push(displayArticle);
                             iframeArticles.push(iframeLeft);
                             iframeArticles.push(iframeRight);
                             isSim = true;
-                        }
-                        
+                        }  
                     }
                     if (isSim) break;
-                    // if (sim > .5) {
-                    //     // console.log(titleA);
-                    //     // console.log(titleB);
-                    //     // console.log('--------------------------------------');
-                    //     for (curMidSource = 0; curMidSource < midArticles.length; curMidSource++) {
-                    //         for (curMidArticle = 0; curMidArticle < midArticles[curMidSource].articles.length; curMidArticle++) {
-                    //             let titleC = cleanArticleTitle(midArticles[curMidSource].articles[curMidArticle].title.toLowerCase());
-                    //             let simAB = findSimilarity(titleA, titleC);
-                    //             let simBC = findSimilarity(titleB, titleC);
-                    //             if (simAB > .2 || simBC > .2) {
-                    //                 //console.log(titleA);
-                    //                 //console.log(titleB);
-                    //                 //console.log(titleC);
-                    //                 //console.log('----------------------------------');
-                    //                 // $('#Headline1').html(titleC);
-                    //                 // $('#desc1').html(midArticles[curMidSource].articles[curMidArticle].description);
-                    //                 if (midArticles[curMidSource].articles[curMidArticle].content && midArticles[curMidSource].articles[curMidArticle].description) {
-                    //                     //iframeArticles.push(midArticles[curMidSource].articles[curMidArticle]);
-                    //                     displayArticles.push(midArticles[curMidSource].articles[curMidArticle]);
-                    //                 }
-                    //             }
-                    //         }
-                    //     }
-                    // }
                 }
                 if (isSim) break;
             }
             isSim = false;
         }
     }
-    console.log(iframeArticles);
-    //console.log(displayArticles);
+
+    //once similar articles are found, set the html to display the first 5 found articles on the page
     if (displayArticles.length >= 5) {
         let k = 1;
         for (i=0; i < 5; i++) {
@@ -197,11 +159,9 @@
             let textLeft = '#textLeft' + String(i+1);
             let textRight = '#textRight' + String(i+1);
 
-            // console.log(headID, descID);
             $(headID).html(displayArticles[i].title);
             $(rightID).attr('href',iframeArticles[k].url)
             $(leftID).attr('href',iframeArticles[i*2].url)
-            // $(descID).html(displayArticles[i].description);
             $(descID).html('');
             if (displayArticles[i].urlToImage) {
                 $(picID).attr('src', displayArticles[i].urlToImage);
@@ -215,6 +175,7 @@
             k = k + 2;
         }
     }
+    //hides tiles for articles that weren't found if its less than 5
     else {
         let k = 1;
         for (i=0; i < displayArticles.length; i++) {
@@ -232,17 +193,10 @@
 
             $(rightID).attr('href',iframeArticles[k].url)
             $(leftID).attr('href',iframeArticles[i*2].url)
-            // $(descID).html(displayArticles[i].description);
             $(descID).html('');
             if (displayArticles[i].urlToImage) {
                 $(picID).attr('src', displayArticles[i].urlToImage);
             }
-
-            // $(urlLeft).html(iframeArticles[i*2].url);
-            // $(urlRight).html(iframeArticles[k].url);
-
-            // $(textLeft).html(iframeArticles[i*2].content);
-            // $(textRight).html(iframeArticles[k].content);
             k = k + 2;
         }
         for (i = displayArticles.length; i < 5; i++) {
@@ -251,12 +205,15 @@
         }
     }
     $('#tileList').show();
+    //2000 ms on the timeout
   }, 2000);
+
+  //cosine similarity function: Vectorizes the strings passed in, compares the cosine angle between all of the vectors and returns a
+  //number bewteen 0 and 1 denoting how similar the strings are.
   function findSimilarity(title1, title2) {
     
     function termFreqMap(str) {
         var words = str.split(' ');
-        //console.log(words);
         var termFreq = {};
         words.forEach(function(w) {
             termFreq[w] = (termFreq[w] || 0) + 1;
@@ -304,6 +261,31 @@
     }
     return Cosinesimilarity(title1, title2);
   };
+  //button functionality javascript
+  $(document).ready(() => {
+      $(".popup").hide();
+      $(".close").click(function () {
+        $(this).parent().fadeOut("slow");
+        $(".links").fadeIn("slow");
+      });
+      $('#tileList').hide();
+  });
+  $(window).scroll(function() {
+      if ($(this).scrollTop() == 0) {
+          $('#banner').css({
+                'box-shadow': 'none',
+                '-moz-box-shadow' : 'none',
+                '-webkit-box-shadow' : 'none' });
+          $('#moreButton').css({'display': 'none'});
+      }
+      else {
+          $('#banner').css({
+                'box-shadow': '0px 6px 8px #3b3b3b',
+                '-moz-box-shadow' : '0px 6px 8px #3b3b3b',
+                '-webkit-box-shadow' : '0px 6px 8px #3b3b3b' });
+          $('#moreButton').css({'display': 'initial'});
+      }
+  });
 </script>
     <head>
             <title>Home - Both Sides</title>
@@ -314,372 +296,59 @@
             <link rel="stylesheet" type="text/css" href="CSS/Tile.css">
             <script src="Javascript/BothSides.js"></script>
     </head>
-
-<script src="Javascript/jquery-3.3.1.min.js"></script>
-<script type="text/javascript">
-    $(document).ready(() => {
-
-        $(".popup").hide();
-        $(".close").click(function () {
-            $(this).parent().fadeOut("slow");
-            $(".links").fadeIn("slow");
-        });
-        $('#tileList').hide();
-
-        //setTimeout(function(){console.log(cnnArticles)},1000);
-
-        $('#searchButton').click(() => {
-            database.ref('history/').once('value', (snapshot) => {
-                const data = snapshot.val();
-                console.log('data', data);
-                let query = $('#SearchBox').val();
-                let matches = [];
-                sourceList = Object.keys(data);
-                for (curSide=0; curSide < sourceList.length; curSide++) {
-                    let sideSources = data[sourceList[curSide]];
-                    for (curSideSource = 0; curSideSource < sideSources.length; curSideSource++) {
-                        let curArticles = sideSources[curSideSource].articles;
-                        for (curArticle = 0; curArticle < curArticles.length; curArticle++) {
-                            let curTitle = curArticles[curArticle].title;
-                            let titleSplit = curTitle.split(' ');
-                            for (wrd = 0; wrd < titleSplit.length; wrd++) {
-                                if (query == titleSplit[wrd]) {
-                                    matches.push(curTitle);
-                                }
-                            }
-                        }
-                    }
-                }
-                if($('#SearchBox').val().length == 0) {
-                    $('#queryDisplay').html('');
-                    $('#queryDisplay').css('background', 'none');
-                    return;
-                } else if (matches.length > 0) {
-                    $('#queryDisplay').html('');
-                    const qDisp = document.getElementById("queryDisplay");
-                    for(i = 0; i < matches.length - 1; i++) {
-                        $('#queryDisplay').html($('#queryDisplay').html() + matches[i] + '<br><br>');
-                    }
-                    $('#queryDisplay').html($('#queryDisplay').html() + matches[i]);
-                    $('#queryDisplay').css('background-color', 'white');
-                } else {
-                    $('#queryDisplay').html('no matches');
-                    $('#queryDisplay').css('background-color', 'white');
-                }
-            });
-        });
-    });
-
-    $(window).scroll(function() {
-        if ($(this).scrollTop() == 0) {
-            $('#banner').css({
-                    'box-shadow': 'none',
-                    '-moz-box-shadow' : 'none',
-                    '-webkit-box-shadow' : 'none' });
-            $('#moreButton').css({'display': 'none'});
-        }
-        else {
-            /*filter: drop-shadow(0px 4px 4px #3b3b3b);*/
-            $('#banner').css({
-                    'box-shadow': '0px 6px 8px #3b3b3b',
-                    '-moz-box-shadow' : '0px 6px 8px #3b3b3b',
-                    '-webkit-box-shadow' : '0px 6px 8px #3b3b3b' });
-            $('#moreButton').css({'display': 'initial'});
-        }
-    });
-
-    function starClick(img) {
-        const id = "#" + img.id;
-        if($(id).attr('src') == 'Images/hollowStar2.png') {
-            $(id).attr('src', 'Images/star.png');
-        } else {
-            $(id).attr('src', 'Images/hollowStar2.png');
-        }
-    }
-
-    function clearSearch(input) {
-        const qDisp = document.getElementById('queryDisplay');
-        const search = document.getElementById("SearchBox");
-        if(search.value != "") {
-            search.value = "";
-        }
-        if(input.checked != '') {
-           qDisp.style.background = 'none';
-           qDisp.textContent = "";
-        }
-        if(qDisp.textContent == "") {
-            qDisp.style.background = 'none';
-        }
-    }
-
-</script>
-
 </body>
-
     <!-- Company Name & link on banner  -->
     <div id="topOfPage"></div>
     <div id="banner">
-        <!-- input id="findBox" type="checkbox" checked='' onclick="clearSearch(this)"></input -->
         <a href="Search.html"><img id="findImg" src="Images/MagnifyingGlass.png"></img></a>
         <a href="BothSides.html" id="title"><img id="titleImg" src="Images/BothSidesTitle.png"></img></a>
-        <!-- <a href="Saved.html" id="starButton"><img src="Images/star.png"></img></a> -->
-        <!-- input type="search" placeholder="Search For Article.." id="searchInput" onsearch="findArticle()" -->
-        <!-- <input placeholder="Search For Article.." id="SearchBox" type="text" size="20"/>
-        <button id="searchButton">Go!</button>
-        <div id="spacing"></div>
-        <p id='queryDisplay'></p> -->
     </div>
-
     <center>
     <ul id="tileList">
         <li id="savedTile1" class="tile">
-            <!-- <img src="Images/hollowStar2.png" class="tileStar" id="firstStar" onclick="starClick(this)"></img> -->
             <b><p class="tileHeadline" id='Headline1'>Lorem ipsum dolor sit amet, consectetur adipiscing elit incididunt ut labore et
             </p></b>
             <p class="content" id="desc1">Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-
             <img src="Images/noImageAvailable.png" id='pic0'></img>
-               
-            <p hidden id="urlLeft1">This url should be hidden.</p>
-            <p hidden id="urlRight1">This url should be hidden.</p>
-            <p hidden id="urlCenter1">This url should be hidden.</p>
-
-            <p hidden id="textLeft1">This text should be hidden.</p>
-            <p hidden id="textRight1">This text should be hidden.</p>
-            <p hidden id="textCenter1">This text should be hidden.</p>
-
             <a id="leftLink0" href='' class='btn' target="_blank">LEFT</a>
             <a id="rightLink0" href='' class='btn' target="_blank">RIGHT</a>
-
-            <!-- <a id="leftLink" onclick="getLeft('urlLeft1', 'textLeft1')">LEFT</a> -->
-            <!-- <a id="centerLink" onclick="getCenter('urlCenter1', 'textCenter1')">CENTER</a> -->
-            <!-- <a id="rightLink" onclick="getRight('urlRight1', 'textRight1')">RIGHT</a> -->
         </li>
         <li id="savedTile2" class="tile">
-            <!-- <img src="Images/star.png" class="tileStar" id="secondStar" onclick="starClick(this)"></img> -->
             <b><p class="tileHeadline" id='Headline2'>Headline 2</p></b>
-
             <p class="content" id="desc2">Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-
             <img src="Images/noImageAvailable.png" id='pic1'></img>
-
-            <p hidden id="urlLeft2">This url should be hidden.</p>
-            <p hidden id="urlRight2">This url should be hidden.</p>
-            <p hidden id="urlCenter2">This url should be hidden.</p>
-
-            <p hidden id="textLeft2">This text should be hidden.</p>
-            <p hidden id="textRight2">This text should be hidden.</p>
-            <p hidden id="textCenter2">This text should be hidden.</p>
-
             <a id="leftLink1" href='' target="_blank">LEFT</a>
             <a id="rightLink1" href='' target="_blank">RIGHT</a>
-            <!-- <a id="leftLink" onclick="getLeft('urlLeft2', 'textLeft2')">LEFT</a> -->
-            <!-- <a id="centerLink" onclick="getCenter('urlCenter2', 'textCenter2')">CENTER</a> -->
-            <!-- <a id="rightLink" onclick="getRight('urlRight2', 'textRight2')">RIGHT</a> -->
         </li>
         <li id="savedTile3" class="tile">
-            <!-- <img src="Images/hollowStar2.png" class="tileStar" id="thirdStar" onclick="starClick(this)"></img> -->
             <b><p class="tileHeadline" id='Headline3'>Headline 3</p></b>
-
             <p class="content" id="desc3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-
             <img src="Images/noImageAvailable.png" id='pic2'></img>
-            
-            <p hidden id="urlLeft3">This url should be hidden.</p>
-            <p hidden id="urlRight3">This url should be hidden.</p>
-            <p hidden id="urlCenter3">This url should be hidden.</p>
-
-            <p hidden id="textLeft3">This text should be hidden.</p>
-            <p hidden id="textRight3">This text should be hidden.</p>
-            <p hidden id="textCenter3">This text should be hidden.</p>
-
             <a id="leftLink2" href='' target="_blank">LEFT</a>
             <a id="rightLink2" href='' target="_blank">RIGHT</a>
-            <!-- <a id="leftLink" onclick="getLeft('urlLeft3', 'textLeft3')">LEFT</a> -->
-            <!-- <a id="centerLink" onclick="getCenter('urlCenter3', 'textCenter3')">CENTER</a> -->
-            <!-- <a id="rightLink" onclick="getRight('urlRight3', 'textRight3')">RIGHT</a> -->
         </li>
         <li id="savedTile4" class="tile">
-            <!-- <img src="Images/star.png" class="tileStar" id="fourthStar" onclick="starClick(this)"></img> -->
             <b><p class="tileHeadline" id='Headline4'>Headline 4</p></b>
-
             <p class="content" id="desc4">Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-
             <img src="Images/noImageAvailable.png" id='pic3'></img>
-
-            <p hidden id="urlLeft4">This url should be hidden.</p>
-            <p hidden id="urlRight4">This url should be hidden.</p>
-            <p hidden id="urlCenter4">This url should be hidden.</p>
-
-            <p hidden id="textLeft4">This text should be hidden.</p>
-            <p hidden id="textRight4">This text should be hidden.</p>
-            <p hidden id="textCenter4">This text should be hidden.</p>
-
             <a id="leftLink3" href='' target="_blank">LEFT</a>
             <a id="rightLink3" href='' target="_blank">RIGHT</a>
-
-            <!-- <a id="leftLink" onclick="getLeft('urlLeft4', 'textLeft4')">LEFT</a> -->
-            <!-- <a id="centerLink" onclick="getCenter('urlCenter4', 'textCenter4')">CENTER</a> -->
-            <!-- <a id="rightLink" onclick="getRight('urlRight4', 'textRight4')">RIGHT</a> -->
-            
         </li>
         <li id="savedTile5" class="tile">
-            <!-- <img src="Images/star.png" class="tileStar" id="fifthStar" onclick="starClick(this)"></img> -->
             <b><p class="tileHeadline" id='Headline5'>Headline 5</p></b>
-            
             <p class="content" id="desc5">Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-               sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-               Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-               sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-               Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-
             <img src="Images/noImageAvailable.png" id='pic4'></img>
-            
-            <p hidden id="urlLeft5">This url should be hidden.</p>
-            <p hidden id="urlRight5">This url should be hidden.</p>
-            <p hidden id="urlCenter5">This url should be hidden.</p>
-
-            <p hidden id="textLeft5">This text should be hidden.</p>
-            <p hidden id="textRight5">This text should be hidden.</p>
-            <p hidden id="textCenter5">This text should be hidden.</p>
-
             <a id="leftLink4" href='' target="_blank">LEFT</a>
             <a id="rightLink4" href='' target="_blank">RIGHT</a>
-
-            <!-- <a id="leftLink" onclick="getLeft('urlLeft5', 'textLeft5')">LEFT</a> -->
-            <!-- <a id="centerLink" onclick="getCenter('urlCenter5', 'textCenter5')">CENTER</a> -->
-            <!-- <a id="rightLink" onclick="getRight('urlRight5', 'textRight5')">RIGHT</a> -->
         </li>
     </ul>
     </center>
-
-    <script>
-        function getLeft(site, body){
-            let url = document.getElementById(site).textContent;       
-            let content = document.getElementById(body).textContent;
-
-            $('#tileList').fadeOut("slow");
-            $('#moreButton').fadeOut("slow");
-
-            let doc = document.getElementById('iframe').contentWindow.document;
-            doc.open();
-            doc.write(content);
-            doc.close();
-
-            let iframeSide = document.getElementById('iframeSide');
-            iframeSide.textContent = 'Left';
-
-            let iframeBanner = document.getElementById('iframeBanner');
-            iframeBanner.style.backgroundColor = '#031D65';
-
-            var iframe = document.getElementById('iframe');
-            var style = document.createElement('style');
-            style.textContent =
-                'body {' +
-                '  color: white;' +
-                '  font-family: sans-serif;' +
-                '  font-size: 1.2rem;' +
-                '}'
-            iframe.contentDocument.head.appendChild(style);
-            
-            document.getElementById("articleLink").href=url;
-
-            $(".popup").fadeIn('slow');
-        }
-
-        function getCenter(site, body){
-            let url = document.getElementById(site).textContent; 
-            let content = document.getElementById(body).textContent;      
-
-            $('#tileList').fadeOut("slow");
-            $('#moreButton').fadeOut("slow");
-
-            let doc = document.getElementById('iframe').contentWindow.document;
-            doc.open();
-            doc.write(content);
-            doc.close();
-
-            let iframeSide = document.getElementById('iframeSide');
-            iframeSide.textContent = 'Center';
-
-            let iframeBanner = document.getElementById('iframeBanner');
-            iframeBanner.style.backgroundColor = 'rgb(50, 50, 50)';
-
-            var iframe = document.getElementById('iframe');
-            var style = document.createElement('style');
-            style.textContent =
-                'body {' +
-                '  color: white;' +
-                '  font-family: sans-serif;' +
-                '  font-size: 1.2rem;' +
-                '}'
-            iframe.contentDocument.head.appendChild(style);
-            
-            document.getElementById("articleLink").href=url;
-
-            $(".popup").fadeIn('slow');
-        }
-
-        function getRight(site, body){
-            let url = document.getElementById(site).textContent;  
-            let content = document.getElementById(body).textContent;     
-
-            $('#tileList').fadeOut("slow");
-            $('#moreButton').fadeOut("slow");
-
-            let doc = document.getElementById('iframe').contentWindow.document;
-            doc.open();
-            doc.write(content);
-            doc.close();
-
-            let iframeSide = document.getElementById('iframeSide');
-            iframeSide.textContent = 'Right';
-
-            let iframeBanner = document.getElementById('iframeBanner');
-            iframeBanner.style.backgroundColor = '#a70000';
-
-            var iframe = document.getElementById('iframe');
-            var style = document.createElement('style');
-            style.textContent =
-                'body {' +
-                '  color: white;' +
-                '  font-family: sans-serif;' +
-                '  font-size: 1.2rem;' +
-                '}'
-            iframe.contentDocument.head.appendChild(style);
-
-            document.getElementById("articleLink").href=url;
-            
-
-            $(".popup").fadeIn('slow');
-        }
-
-        function reopen(){
-            $('#tileList').fadeIn("slow");
-            $('#moreButton').fadeIn("slow");
-        }
-    </script>
-
-    <div class="popup">
-        <div id="iframeBanner">
-            <h1 id="iframeSide"></h1>
-        </div>
-        <iframe id ="iframe" src="">
-            <p>Your browser does not support iframes.</p>
-        </iframe>
-        <a id ="articleLink" href=""><button class="iframe-button">Go to Article</button></a>
-        <a id ="exitFrame" href="#" class="close" onclick="reopen()">exit</a>
-    </div>
-
-
 </body>
-
-<!-- More -->
 <div id="moreButton">
 	<a href="#">
 	<img src = "Images/arrow_down.png"
@@ -687,5 +356,4 @@
 	 alt = "Back to Top" title = "Back to Top">
 	</a>
 </div>
-
 </html>
