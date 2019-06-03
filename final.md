@@ -1,6 +1,7 @@
 # Team Members 
 
-Chris Wynne 
+Chris Wynne : 
+Contributions: Wrote API functionality for newsapi and firebase. Wrote article comparison functionality . Wrote Search functionality. 
 
 
 Camdyn Rasque 
@@ -21,10 +22,11 @@ Search.html
 
 CSS: 
 BothSides.css,
-Tile.css
+Tile.css,
+Saved.css
 
 Javascript: 
-BothSides.js
+server.js
 
 
 # Google Slide 
