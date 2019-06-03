@@ -14,7 +14,11 @@ Contributions:
   - Wrote most of the CSS and styling on the app front-end.
 
 
-Alan Chen 
+Alan Chen :
+Contributions: 
+  - Wrote Left/Right buttons functionality
+  - Aided in designing the aesthetic of the app.
+  - Aided in API functionality for firebase
 
 
 Shreya Sheel 
