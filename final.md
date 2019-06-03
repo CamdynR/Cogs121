@@ -18,7 +18,10 @@ Alan Chen
 
 
 Shreya Sheel 
-
+Contributions: 
+  - Aided in designing the aesthetic of the app.
+  - Aided in branding and logo designs.
+  - Made demo video and Google slide 
 
 
 # Source Code Files 
