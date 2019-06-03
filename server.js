@@ -1,3 +1,4 @@
+// Basic server starting code.
 const express = require('express');
 const app = express();
 
