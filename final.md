@@ -4,7 +4,9 @@ Chris Wynne :
 Contributions: Wrote API functionality for newsapi and firebase. Wrote article comparison functionality . Wrote Search functionality. 
 
 
-Camdyn Rasque 
+Camdyn Rasque :
+Contributions: Designed the aesthetic of the app and aided in branding and logo designs. Wrote most of the CSS and styling
+for the app.
 
 
 Alan Chen 
